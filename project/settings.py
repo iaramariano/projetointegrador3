@@ -28,7 +28,7 @@ MAILERLITE_NEWSLETTER_GROUP_ID = config("MAILERLITE_NEWSLETTER_GROUP_ID", defaul
 MAILERLITE_TIMEOUT = config("MAILERLITE_TIMEOUT", default=6.0, cast=float)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS_STRING = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 ALLOWED_HOSTS = []

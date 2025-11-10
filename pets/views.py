@@ -30,7 +30,8 @@ def area_logada(request):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def panel(request):
-    return render(request, 'pets/pages/panel.html')
+    context = {'title': 'Painel'}
+    return render(request, 'pets/pages/panel.html', context)
 
 
 # *************************************************************** VIEWS RELACIONADAS A CÃES**********************************************************************

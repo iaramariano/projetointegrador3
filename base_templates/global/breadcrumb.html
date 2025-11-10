@@ -3,7 +3,7 @@
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Início</a></li>
     {% if request.resolver_match.url_name != "home" %}
       <li class="breadcrumb-item active" aria-current="page">
-        {{ view.title|default:request.resolver_match.url_name|capfirst }}
+        {{ title|default:request.resolver_match.url_name|capfirst }}
       </li>
     {% endif %}
   </ol>

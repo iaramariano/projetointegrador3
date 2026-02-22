@@ -24,14 +24,6 @@ echo "--- FIM DA VERIFICAÇÃO ---"
 echo "Aplicando migrações do banco de dados..."
 python manage.py migrate --no-input
 
-#Temporário: Criar superusuário
-
-python manage.py createsuperuser --no-input || true
-
-
-
-
-
 # Coleta os arquivos estáticos
 echo "Coletando arquivos estáticos..."
 python manage.py collectstatic --no-input --clear

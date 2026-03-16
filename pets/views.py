@@ -22,10 +22,10 @@ bg_colors = BgCardColor() #Classe que permite a inclusão da cor de fundo do car
 # ***********************************************************VIEWS INICIAIS E DE PAINEL DE CONTROLE***********************************************************
 
 
-def home(request):
-    return render(request, 'pets/pages/home.html')
+''' def home(request):
+    return render(request, 'pets/pages/home.html')'''
 
-def area_logada(request):
+def home(request):
     return redirect ('authors:login')
 
 @login_required(login_url='authors:login', redirect_field_name='next')

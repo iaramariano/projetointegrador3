@@ -26,9 +26,9 @@ bg_colors = BgCardColor() #Classe que permite a inclusão da cor de fundo do car
     return render(request, 'pets/pages/home.html')'''
 
 def home(request):
-    return redirect ('authors:login')
+    return redirect ('users:login')
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def panel(request):
     return render(request, 'pets/pages/panel.html')
 
@@ -91,7 +91,7 @@ def petlist(request, search=False, filter=False):
 # **************************************************************************************************************************************************************
 
 # Gera o formulário de cadastro de cães. Usa o mesmo template da view de edição, mas sem dados preenchidos.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def pet(request):
            
     form = PetsModForm()
@@ -101,7 +101,7 @@ def pet(request):
 # **************************************************************************************************************************************************************
 
 # Salva o novo cão no banco de dados e exibe uma mensagem confirmando o cadastro.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def pet_create(request):
 
     form = PetsModForm(request.POST, request.FILES)
@@ -121,7 +121,7 @@ def pet_create(request):
 # **************************************************************************************************************************************************************
 
 # Gera o formulário de cadastro/edição de cães, com os dados do cão selecionado já preenchidos.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def pet_view(request, id_pet):
 
     pet = get_object_or_404(PetsMod, id_pet=id_pet)
@@ -134,7 +134,7 @@ def pet_view(request, id_pet):
 # **************************************************************************************************************************************************************
 
 # Salva as alterações feitas no cadastro do cão e exibe uma mensagem confirmando a atualização.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def pet_update(request, id_pet):
     
     pet = get_object_or_404(PetsMod, id_pet=id_pet)
@@ -154,7 +154,7 @@ def pet_update(request, id_pet):
 # **************************************************************************************************************************************************************
 
 # Exclui um cão cadastrado do banco de dados.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def pet_delete(request, id_pet):
 
     pet = get_object_or_404(PetsMod, id_pet=id_pet)
@@ -177,7 +177,7 @@ def pet_delete(request, id_pet):
 # ***********************************************************VIEWS RELACIONADAS A SETORES************************************************************************
 
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def sector_manager(request):
           
     form = SectorModForm()
@@ -199,7 +199,7 @@ def sector_manager(request):
 # ***************************************************************************************************************************************************************
 
 # Cria um novo setor no banco de dados e exibe uma mensagem confirmando a criação.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def sector_create(request):
        
     form = SectorModForm(request.POST or None)
@@ -217,7 +217,7 @@ def sector_create(request):
 # ***************************************************************************************************************************************************************
 
 # Atualiza os dados do setor selecionado e exibe uma mensagem confirmando a atualização.
-@login_required(login_url='authors:login', redirect_field_name='next')    
+@login_required(login_url='users:login', redirect_field_name='next')    
 def sector_update(request, id_sector):
     
     sector = get_object_or_404(SectorMod, id_sector=id_sector)
@@ -237,7 +237,7 @@ def sector_update(request, id_sector):
 # ***************************************************************************************************************************************************************
 
 # Exclui o setor selecionado do banco de dados.
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def sector_delete(request, id_sector):
     
     sector = get_object_or_404(SectorMod, id_sector=id_sector)
@@ -253,7 +253,7 @@ def sector_delete(request, id_sector):
 #*****************************************************************************************************************************
 # Cria o formulário para registrar um evento médico para um cão específico.
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def dog_medical_event_form(request):
 
     form = MedicalEventForm()
@@ -268,7 +268,7 @@ def dog_medical_event_form(request):
 #*****************************************************************************************************************************
 # Cria o formulário para registrar um evento médico para todos os cães de um setor.
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def sector_medical_event_form(request):
 
     form = MedicalEventSectorForm()
@@ -281,7 +281,7 @@ def sector_medical_event_form(request):
 #****************************************************************************************************************************************************************
 # Salva o evento médico no banco de dados e exibe uma mensagem confirmando o registro.
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def medical_event_register(request, level=None):
 
     if level == 'pet': # Salva um evento médico para um cão específico
@@ -331,7 +331,7 @@ def medical_event_register(request, level=None):
 #****************************************************************************************************************************************************************
                     
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def dog_med_event_view(request, id_pet):
 
     pet = get_object_or_404(PetsMod, id_pet=id_pet)
@@ -347,7 +347,7 @@ def dog_med_event_view(request, id_pet):
     return render (request, 'pets/pages/dog_med_event_view.html', context=context)
     
 # ***********************************************************VIEWS RELACIONADAS A USUÁRIOS************************************************************************
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='users:login', redirect_field_name='next')
 def users(request):
     return render(request, 'pets/pages/users.html')
 

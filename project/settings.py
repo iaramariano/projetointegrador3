@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pets',
-    'authors',
+    'shelters',
+    'users',
     'storages',
     'newsletter',
 ]
@@ -115,6 +116,10 @@ else:
             'PORT': config('DB_PORT'),
         }
     }
+
+# Custom user model
+AUTH_USER_MODEL = 'users.UsersMod'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

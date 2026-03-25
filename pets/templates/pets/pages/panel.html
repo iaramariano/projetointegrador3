@@ -62,14 +62,14 @@
   </div>
 
   <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-    <a href = {% url 'authors:register' %} role="button" class="btn btn-icon mb-3">
+    <a href = {% url 'users:register' %} role="button" class="btn btn-icon mb-3">
       <i class="fa-solid fa-users mb-2 btn-icon-main"></i>
       <span class="btn-icon-text">GERENCIAR USUÁRIOS</span>
     </a>
   </div>
 
   <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-    <form method="POST" action={% url 'authors:logout' %}>
+    <form method="POST" action={% url 'users:logout' %}>
       {% csrf_token %}
       <button type="submit" class="btn btn-icon mb-3">
         <i class="fa-solid fa-right-from-bracket mb-2 btn-icon-main"></i>

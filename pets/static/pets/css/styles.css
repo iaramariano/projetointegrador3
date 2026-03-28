@@ -62,11 +62,6 @@ body {
 /******************************** HEADER STYLES ****************************/
 /*PENSAR EM TROCAR O ABBR POR UM EFEITO HOVER */
 
-.brand-logo{
-    width: 10%;
-    height: 10%;
-}
-
 .user-pawn {
     padding-top: 1.5rem;
     color: #533E1A;

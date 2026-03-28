@@ -6,6 +6,7 @@ class SheltersMod(models.Model):
 
     id_shelter = models.AutoField(primary_key=True, db_column='id_shelter')
     name = models.CharField(max_length=100, db_column='name', blank=False, null=False)
+    logo = models.ImageField(upload_to='shelters/img/logos', db_column='logo', blank=True, null=True)
     options = models.JSONField(default=dict, db_column='options', blank=True, null=True)
 
     def __str__(self):

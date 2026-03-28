@@ -22,8 +22,8 @@ bg_colors = BgCardColor() #Classe que permite a inclusão da cor de fundo do car
 # ***********************************************************VIEWS INICIAIS E DE PAINEL DE CONTROLE***********************************************************
 
 
-''' def home(request):
-    return render(request, 'pets/pages/home.html')'''
+def caotinho(request):
+    return render(request, 'pets/pages/home.html')
 
 def home(request):
     return redirect ('users:login')

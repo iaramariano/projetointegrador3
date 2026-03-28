@@ -8,13 +8,13 @@
       
       <div class="row">
       
-        <div class="col-3">
-          
+        <div class="col-3">  
           {% if request.user.is_authenticated %}
-            <a class="brand-logo" href="{% url 'pet:panel' %}"><img title="logo" aria-label="Logo" src="{% static 'pets/img/ch_logo_option2_small.png' %}"></a>
+            <a href="{% url 'pet:panel' %}">
           {% else %}
-            <a class="brand-logo" href="{% url 'pet:home' %}"><img title="logo" aria-label="Logo" src="{% static 'pets/img/ch_logo_option2_small.png' %}"></a>
+            <a href="{% url 'pet:home' %}">
           {% endif %}
+              <img title="CÃOTROLE" title="CÃOTROLE LOGO" alt="CÃOTROLE" src="{% static 'pets/img/caotrole_alt_logo_medium.png' %}" height="100"></a>
         </div>
 
         <div class="col-6 text-center py-5">

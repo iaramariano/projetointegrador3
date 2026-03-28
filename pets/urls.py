@@ -19,6 +19,8 @@ urlpatterns = [
     path('pet/delete/<int:id_pet>', views.pet_delete, name='pet_delete'),
     
     path('petlist', views.petlist, name='petlist'),
+    # View da página do cãotinho para separação.
+    path('caotinho', views.caotinho, name='caotinho'),
     
     ## Sector URLs
     path('sector', views.sector_manager, name='sector_manager'),

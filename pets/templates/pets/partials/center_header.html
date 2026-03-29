@@ -1,0 +1,30 @@
+{% load static %}
+
+{% if request.user.is_authenticated and request.user.shelter %}
+    <div class="col-6 text-center">
+        <span class="topbar-title">CÃOTROLE</span>
+    
+        <div class="row justify-content-center align-items-center">
+            <div class="col-auto d-flex align-items-center">
+                {% if request.user.shelter.logo %}
+                    <img src="{{ request.user.shelter.logo.url }}" 
+                         alt="Logo {{ request.user.shelter.name }}" 
+                        height="50" 
+                        class="me-3"> 
+                {% endif %}
+
+                <span class="shelter-name mb-0">{{ request.user.shelter.name }}</span>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-6 text-center py-3">
+        <span class="topbar-title">CÃOTROLE</span>
+    </div>
+{% endif %}
+                
+                
+                     
+                
+                
+

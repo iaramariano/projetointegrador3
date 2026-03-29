@@ -9,9 +9,9 @@ html {
     font-size: 62.5%;
 }
 
-body {
+/*body {
     font-size: 1.6rem;
-}
+}*/
 
 .central-area{
     padding-left: 30rem;
@@ -84,8 +84,8 @@ body {
 }
 
 .shelter-name {
-    color: #533E1A;
-    font-size: 5rem;
+    color: #B26E39;
+    font-size: 2rem;
     font-weight: bold;
 }
 

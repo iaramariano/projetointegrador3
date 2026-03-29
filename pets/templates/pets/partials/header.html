@@ -24,7 +24,7 @@
     
         <div class="col-3 text-end py-3">
           {% if request.user.is_authenticated %}
-            <abbr title="{{request.user.username}} está logado"><i class="fa fa-paw user-pawn" aria-hidden="true"></i></abbr>
+            <abbr title="{{request.user.username}}&#10;{{request.user.shelter}}"><i class="fa fa-paw user-pawn" aria-hidden="true"></i></abbr>
             <i class="fa fa-check-circle topbar-icon-small" aria-hidden="true"></i>
             {% else %}
             <abbr title="Usuário não logado"><i class="fa fa-paw user-pawn" aria-hidden="true"></i></abbr>

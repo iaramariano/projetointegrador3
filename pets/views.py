@@ -17,6 +17,8 @@ from datetime import date
 #Instância classes de suporte
 dates = Dates() #Classe que possibilita a inclusão dos meses em português para preenchimento dos formulários.
 bg_colors = BgCardColor() #Classe que permite a inclusão da cor de fundo do card em cada objeto pet.
+shelter_identity = {'name': None,
+                    'logo': None} # Variável global para armazenar os dados de instituição para exibição no cabeçalho
 
 
 # ***********************************************************VIEWS INICIAIS E DE PAINEL DE CONTROLE***********************************************************

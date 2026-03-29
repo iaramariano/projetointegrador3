@@ -89,10 +89,13 @@ body {
 }
 
 .shelter-name {
-    color: #B26E39;
+    color: #FEF3D2;
     font-size: 2rem;
     font-weight: bold;
 }
+
+
+
 
 /******************************** BODY STYLES ****************************/
 .custom-radio .form-check-input {

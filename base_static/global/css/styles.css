@@ -88,6 +88,15 @@ body {
     padding-top: 10rem;
 }
 
+.shelter-name {
+    color: #FEF3D2;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+
+
 /******************************** BODY STYLES ****************************/
 .custom-radio .form-check-input {
     border: 2px solid #B26E39;

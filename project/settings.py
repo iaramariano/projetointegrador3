@@ -97,27 +97,33 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if config('DATABASE_URL', default=None):
-    # Se estiver no Render ou outro ambiente de produção, usa a DATABASE_URL
-    DATABASES = {
-        'default': dj_database_url.config(
-            conn_max_age=600,
-            conn_health_checks=True,
-            default=config('DATABASE_URL')
-        )
-    }
-    # Adiciona a configuração de engine para psycopg2, se necessário no Render
-    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-else:
-    # Senão, monta a configuração para o Docker local, lendo do arquivo .env
+# Verifica a configuração na variável de ambiente
+DB_LOCAL = config('DB_LOCAL') == 'True'  
+
+if DB_LOCAL:
+    # Configuração para ambiente local (Docker)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
+            'NAME': config('DBLOCAL_NAME'),
+            'USER': config('DBLOCAL_USER'),
+            'PASSWORD': config('DBLOCAL_PASSWORD'),
+            'HOST': config('DBLOCAL_HOST'),
+            'PORT': config('DBLOCAL_PORT'),
+        }
+    }
+
+else:
+    # Configuração para Supabase
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': config('DB_NAME'),
             'USER': config('DB_USER'),
             'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST'),  # No .env, este valor deve ser 'db'
+            'HOST': config('DB_HOST'),
             'PORT': config('DB_PORT'),
+            'OPTIONS': {'sslmode': 'require'},
         }
     }
 

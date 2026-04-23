@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'users',
     'storages',
     'newsletter',
+    'pharma',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'base_templates'
+            BASE_DIR / 'base_templates',
+            BASE_DIR / 'pharma' / 'templates',
+            BASE_DIR / 'pharma' / 'templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {

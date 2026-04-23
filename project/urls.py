@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('pets.urls')), 
     path('users/', include('users.urls')),
     path('', include('newsletter.urls')),
+    path('pharma/', include('pharma.urls')),
 ]
 
 if settings.DEBUG:

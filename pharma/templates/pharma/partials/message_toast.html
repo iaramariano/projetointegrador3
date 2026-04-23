@@ -1,0 +1,26 @@
+{% if messages %}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast show mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+    
+        {% for message in messages %}
+
+            <div class="toast-header">
+                {% if "success" in message.tags %}
+                    <i class="fa-solid fa-circle-check fa-2x alert-success" style="color:green;"></i>
+                    <strong class="ms-2 me-auto">CÃOTROLE</strong>
+                    <small>Sucesso</small>
+                {% else %}
+                    <i class="fa-solid fa-circle-xmark fa-2x alert-failure" style="color:red;"></i>
+                    <strong class="ms-2 me-auto">CÃOTROLE</strong>
+                    <small>Erro</small>
+                {% endif %}
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endif %}

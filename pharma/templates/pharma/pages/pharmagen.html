@@ -1,0 +1,49 @@
+{% extends 'global/basepharm.html' %}
+
+
+{% block title %}Sobre - Pharma{% endblock %}
+
+{% block content %}
+
+<div class="spacing-row"></div>
+<div class="spacing-row"></div>
+
+<!--COLUNA 1-->
+<div class="row mt-4 align-items-center">
+  
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'pet:petlist' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-book-open mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">VISUALIZAR ITEM</span>
+    </a>
+  </div>
+
+
+  
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'pet:sector_medical_event' %} role="button" class="btn btn-icon mb-3">
+      <i class="fas fa-syringe mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">REGISTRAR ITEM</span>
+    </a>
+  </div>
+
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <form method="POST" action={% url 'users:logout' %}>
+      {% csrf_token %}
+      <button type="submit" class="btn btn-icon mb-3">
+        <i class="fa-solid fa-right-from-bracket mb-2 btn-icon-main"></i>
+        <input type="hidden" name="username" value="{{ request.user.username }}">
+        <span class="btn-icon-text">SAIR</span>
+      </button>
+    </form>
+  </div>
+
+
+</div>
+
+
+
+{% endblock %}

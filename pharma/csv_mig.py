@@ -3,13 +3,11 @@ import django
 import sys
 import csv
 
-# 1. Configura o ambiente (troque 'meu_projeto.settings' pelo seu)
 workdir = os.getcwd()
 sys.path.append(workdir)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
-# 2. Agora sim, importa o modelo
 from pharma.models import PharmGroupMod
 
 def export_groups():

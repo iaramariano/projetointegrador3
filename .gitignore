@@ -138,3 +138,4 @@ venv
 
 .migrations
 *.migrations
+/pharma/csv

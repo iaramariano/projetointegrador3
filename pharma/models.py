@@ -46,10 +46,10 @@ class PharmPresentMod(AuditMixin):
     CONTROL_TYPES = [('NUM', 'Numérico'), ('NIV', 'Nível'), ('USO', 'Uso')]
     
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=30, blank=False, null=False, unique=True)
+    name = models.CharField(max_length=40, blank=False, null=False, unique=True)
     group = models.ForeignKey(PharmGroupMod, on_delete=models.SET_DEFAULT, null=False, blank=False, default='LIQUIDO')
-    dispensing_unit = models.CharField(max_length=20, blank=False, null=False)
-    control_type = models.CharField(max_length=10, choices=CONTROL_TYPES, null=False, blank=False, default='NIV')
+    dispensing_unit = models.CharField(max_length=40, blank=False, null=False)
+    control_type = models.CharField(max_length=20, choices=CONTROL_TYPES, null=False, blank=False, default='NIV')
 
      # Metadados
     created_at = models.DateTimeField(auto_now_add=True)

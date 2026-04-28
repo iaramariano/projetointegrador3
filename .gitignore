@@ -139,3 +139,4 @@ venv
 .migrations
 *.migrations
 /pharma/csv
+/pharma/csv_mig.py

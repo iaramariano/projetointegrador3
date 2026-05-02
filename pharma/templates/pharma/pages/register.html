@@ -1,0 +1,204 @@
+{% extends 'global/base.html' %}
+
+{% block title %}Registro de Item de Estoque Farmacológico{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-4 text-center">Registrar Novo Item de Estoque</h1>
+            
+            {% if messages %}
+                <div class="alert-container mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="row g-3" novalidate>
+                {% csrf_token %}
+
+                <!-- Seção: Produto -->
+                <div class="col-12">
+                    <h5 class="border-bottom pb-2 mb-3">Informações do Produto</h5>
+                </div>
+
+                <div class="col-12">
+                    <label for="{{ form.catalog.id_for_label }}" class="form-label fw-bold">Produto Catálogo *</label>
+                    {{ form.catalog }}
+                    {% if form.catalog.errors %}
+                        <div class="text-danger small mt-1">{{ form.catalog.errors }}</div>
+                    {% endif %}
+                    <small class="text-muted d-block mt-1">Selecione o produto do catálogo</small>
+                </div>
+
+                <div class="col-12">
+                    <div class="alert alert-info d-none" id="productInfo" role="alert">
+                        <h6 class="alert-heading">Informações do Produto Selecionado</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>Nome:</strong> <span id="productName">-</span></p>
+                                <p class="mb-0"><strong>Concentração:</strong> <span id="productConcentration">-</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>Apresentação:</strong> <span id="productPresentation" class="badge bg-primary">-</span></p>
+                                <p class="mb-0"><strong>Tipo:</strong> <span id="productType">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="{{ form.secondary_name.id_for_label }}" class="form-label">Nome Secundário</label>
+                    {{ form.secondary_name }}
+                    {% if form.secondary_name.errors %}
+                        <div class="text-danger small mt-1">{{ form.secondary_name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="{{ form.batch_number.id_for_label }}" class="form-label">Número do Lote *</label>
+                    {{ form.batch_number }}
+                    {% if form.batch_number.errors %}
+                        <div class="text-danger small mt-1">{{ form.batch_number.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Seção: Quantidade e Unidades -->
+                <div class="col-12">
+                    <h5 class="border-bottom pb-2 mb-3">Quantidade e Unidades</h5>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="{{ form.stocking_unity.id_for_label }}" class="form-label">Unidade de Estoque</label>
+                    {{ form.stocking_unity }}
+                    {% if form.stocking_unity.errors %}
+                        <div class="text-danger small mt-1">{{ form.stocking_unity.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    <label for="{{ form.sku_qty.id_for_label }}" class="form-label fw-bold">SKU *</label>
+                    {{ form.sku_qty }}
+                    {% if form.sku_qty.errors %}
+                        <div class="text-danger small mt-1">{{ form.sku_qty.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    <label for="{{ form.dosage_qty.id_for_label }}" class="form-label">Quantidade Dosagem</label>
+                    {{ form.dosage_qty }}
+                    {% if form.dosage_qty.errors %}
+                        <div class="text-danger small mt-1">{{ form.dosage_qty.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Seção: Validade -->
+                <div class="col-12">
+                    <h5 class="border-bottom pb-2 mb-3">Informações de Validade</h5>
+                </div>
+
+                <div class="col-12">
+                    <label for="{{ form.expiry.id_for_label }}" class="form-label">Data de Vencimento</label>
+                    {{ form.expiry }}
+                    {% if form.expiry.errors %}
+                        <div class="text-danger small mt-1">{{ form.expiry.errors }}</div>
+                    {% endif %}
+                    <small class="text-muted d-block mt-1">Formato: DD/MM/AAAA</small>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="col-12 d-flex gap-2 justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-save"></i> Registrar Item
+                    </button>
+                    <a href="{% url 'pharma:list' %}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+
+                <div class="col-12 text-muted text-center small mt-3">
+                    <p>* Campos obrigatórios</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control, .form-select {
+        border-radius: 0.375rem;
+        border: 1px solid #dee2e6;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .alert {
+        border-radius: 0.375rem;
+    }
+    
+    .btn {
+        border-radius: 0.375rem;
+        font-weight: 500;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const catalogSelect = document.getElementById('id_catalog');
+        const productInfo = document.getElementById('productInfo');
+        
+        // Event listener para quando o usuário seleciona um produto
+        catalogSelect.addEventListener('change', function() {
+            const catalogId = this.value;
+            
+            if (!catalogId) {
+                productInfo.classList.add('d-none');
+                return;
+            }
+            
+            // Faz requisição AJAX para obter os dados do produto
+            fetch(`/pharma/api/catalog/${catalogId}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar dados do produto');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Atualiza as informações do produto na tela
+                        document.getElementById('productName').textContent = data.primary_name;
+                        document.getElementById('productConcentration').textContent = 
+                            data.concentration_value ? `${data.concentration_value} ${data.concentration_unity}` : 'Não especificado';
+                        document.getElementById('productPresentation').textContent = data.presentation_name;
+                        document.getElementById('productType').textContent = data.item_type;
+                        
+                        // Mostra o alert com as informações
+                        productInfo.classList.remove('d-none');
+                    } else {
+                        console.error('Erro:', data.error);
+                        productInfo.classList.add('d-none');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                    productInfo.classList.add('d-none');
+                });
+        });
+        
+        // Se houver um produto já selecionado, atualiza na primeira carga
+        if (catalogSelect.value) {
+            catalogSelect.dispatchEvent(new Event('change'));
+        }
+    });
+</script>
+{% endblock %}

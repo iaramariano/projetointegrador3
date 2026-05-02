@@ -9,6 +9,8 @@ app_name = 'pharma'
 
 urlpatterns = [
    
-    path('test/', views.test_view, name='test'   ),
+    path('list/', views.list_view, name='list'),
     path('', views.pharmagen, name='about'),
+    path('register/', views.register_view, name='register'),
+    path('api/catalog/<int:catalog_id>/', views.catalog_detail, name='catalog_detail'),
 ]

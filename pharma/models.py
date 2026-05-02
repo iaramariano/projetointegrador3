@@ -32,8 +32,8 @@ class PharmGroupMod(AuditMixin):
     # Metadados
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey('users.Usersmod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_created')
-    updated_by = models.ForeignKey('users.Usersmod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_updated')
+    created_by = models.ForeignKey('users.UsersMod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_created')
+    updated_by = models.ForeignKey('users.UsersMod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_updated')
 
     def __str__(self):
         return f"{self.name} : {self.help_text}"
@@ -54,8 +54,8 @@ class PharmPresentMod(AuditMixin):
      # Metadados
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey('users.Usersmod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_created')
-    updated_by = models.ForeignKey('users.Usersmod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_updated')
+    created_by = models.ForeignKey('users.UsersMod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_created')
+    updated_by = models.ForeignKey('users.UsersMod', on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_updated')
 
     def __str__(self):
         return self.name
@@ -96,7 +96,8 @@ class CatalogMod(AuditMixin):
             name='unique_catalog_item')]
     
     def __str__(self):
-        return f"{self.primary_name} {self.concentration_value or ''}{self.concentration_unit or ''} ({self.presentation} {self.spec_concentration})"
+        conc = f"{self.concentration_value or ''}{self.concentration_unity or ''}".strip()
+        return f"{self.primary_name} {conc}".strip()
     
 class StockMod(AuditMixin):
 

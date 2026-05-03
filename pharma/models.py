@@ -70,17 +70,17 @@ class CatalogMod(AuditMixin):
     id = models.BigAutoField(primary_key=True)
     primary_name = models.CharField(max_length=100, blank=False, null=True)
     concentration_value = models.DecimalField(max_digits=10, decimal_places=4, blank=True, null=True)
-    concentration_unity = models.CharField(max_length=10, blank=False, null=False)
+    concentration_unity = models.CharField(max_length=10, blank=True, null=True)
     presentation = models.ForeignKey(PharmPresentMod, on_delete=models.PROTECT, null=False, blank=False)
 
     # Quando o medicamento é uma associação e a concentração é especificada em spec_concentration como 
     # uma lista de dicionários {drug, concentration, unity}
-    assoc_concentration = models.BooleanField(default=False)
+    assoc_concentration = models.BooleanField(default=False, null=True, blank=True)
     
     # A dosagem é vinculada ao peso do animal. Expresso também em spec_concentration
-    animal_weight_conc = models.BooleanField(default=False)
+    animal_weight_conc = models.BooleanField(default=False, null=True, blank=True)
 
-    spec_concentration = models.JSONField(blank=True, null=True)
+    spec_concentration = models.JSONField(blank=True, null=True, default=None)
     item_type = models.CharField(max_length=10, choices=ITEM_TYPES, default='MED')
     
     # Campo para alertas de compra para medicamento 
@@ -96,8 +96,9 @@ class CatalogMod(AuditMixin):
             name='unique_catalog_item')]
     
     def __str__(self):
-        return f"{self.primary_name} {self.concentration_value or ''}{self.concentration_unit or ''} ({self.presentation} {self.spec_concentration})"
-    
+        conc = f"{self.concentration_value or ''}{self.concentration_unity or ''}".strip()
+        return f"{self.primary_name} {conc}".strip()
+
 class StockMod(AuditMixin):
 
     # Modelo que registra os itens de estoque
@@ -108,5 +109,5 @@ class StockMod(AuditMixin):
     batch_number = models.CharField(max_length=100, null=True, blank=True)
     stocking_unity = models.CharField(max_length=100, null=True, blank=True)
     expiry = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-    sku_qty = models.IntegerField(null=False, blank=False, default=1)
+    sku_qty = models.IntegerField(null=True, blank=True, default=1)
     dosage_qty = models.DecimalField(decimal_places=2, max_digits=5, blank=True, null=True)

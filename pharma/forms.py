@@ -8,7 +8,7 @@ class CatalogForm(forms.ModelForm):
         fields = ['primary_name', 'concentration_value', 'concentration_unity', 'presentation', 'assoc_concentration', 'animal_weight_conc', 'spec_concentration', 'item_type', 'min_stock']
         widgets = {
             'primary_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome do produto'}),
-            'concentration_value': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.0001'}),
+            'concentration_value': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
             'concentration_unity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidade de concentração'}),
             'presentation': forms.Select(attrs={'class': 'form-select'}),
             'assoc_concentration': forms.CheckboxInput(attrs={'class': 'form-check-input'}),

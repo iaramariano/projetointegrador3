@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Verifica a configuração na variável de ambiente
-DB_LOCAL = config('DB_LOCAL') == 'True'  
+DB_LOCAL = config('DB_LOCAL') == 'True'
 
 if DB_LOCAL:
     # Configuração para ambiente local (Docker)

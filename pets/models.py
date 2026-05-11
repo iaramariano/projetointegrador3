@@ -17,43 +17,39 @@ class SectorMod(models.Model):
 # Cria o modelo de pets
 class PetsMod(models.Model):
         
-        #Criando as opções de escolha para o sexo, porte e aptidão do animal.
+        #Criando as opções de escolha para a espécie, sexo e  status do animal.
+        SPECIES = [("C", "Cão"), ("G", "Gato")]
+        STATUS = [("AP", "Apto"), ("IN", "Inapto"), ("PR", "Em preparo"), ("AD", "Adotado"), ("DV", "Devolvido"), ('ES', "Estrelinha")]
+        SEXES = [("M", "Macho"), ("F", "Fêmea"), ("I", "Indefinido")]
+        ARRIVALS = [('DE', 'Devolução'), ('IN', 'Indefinida'), ('NS', 'Nascimento'), ('RS', 'Resgate'),  ('RC', 'Resgate CED')]
+        PLACES = [('IN', 'Indefinido'), ('AB', 'Abrigo'), ('GI', 'Gatil Infantil'), ('GA', 'Gatil Adulto'), ('CI', 'Canil Infantil'), 
+                  ('CA', 'Canil Adulto'), ('MI', 'Mirim'), ('LT', 'Lar Temporário'), ('LC', 'Lar Temporário CED'), ('TL', 'Trasladada')]
         
-        APTITUDE = [("AP", "Apto"), ("IN", "Inapto"), ("PR", "Em preparo"), ("AD", "Adotado")]
-        SEXES = [("M", "Macho"), ("F", "Fêmea")]
-        SIZES = [("P", "Pequeno"), ("PM", "Peq/Médio"), ("M", "Médio"), ("MG", "Med/Grande"), ("G", "Grande")]
-        # MONTHS_PT = {1: "JAN", 2: "FEV", 3: "MAR", 4: "ABR", 5: "MAI", 6: "JUN", 7: "JUL", 8: "AGO",
-        #9: "SET", 10: "OUT", 11: "NOV", 12: "DEZ"}
-
-            
+        #Posterior criação de um modelo de PLACEMENTS, nos moldes do de setor,
+        
         #Campos em si na mesma ordem em que aparecem no formulário.
         
         #Dados básicos do cão
-        id_pet = models.AutoField(primary_key=True)
+        id_pet = models.BigAutoField(primary_key=True)
+        species = models.CharField(max_length=10, choices=SPECIES, default="C")
         name = models.CharField(max_length=100)
-        sex = models.CharField(max_length=10, choices=SEXES, default="M")  # 'Masculino', 'Feminino'
-        birth = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
         
-        breed = models.CharField(max_length=100, null=True, blank=True)
-        size = models.CharField(max_length=20, choices=SIZES, blank= True, default="P")
-        sector = models.ForeignKey(SectorMod, on_delete=models.SET_NULL, null=True, related_name='pets')        
+        sex = models.CharField(max_length=10, choices=SEXES, default="I")
+        age = models.SmallIntegerField(blank=True, null=True) # Idade em meses
+        arrival = models.CharField(max_length=20, choices=ARRIVALS, default='RS')
         
-        #Dados de tratamento
+        arrival_date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+        placement = models.CharField(max_length=20, choices=PLACES, default='AB')
+        history = models.TextField(max_length=2000, blank=True, null=True)
 
-        vaccine = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-        vermifuge = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-        aptitude = models.CharField(max_length=2, choices=APTITUDE, default="AP")
-
-        #Fotos      
-        front_photo = models.ImageField(upload_to='pets/photos/front/%Y/%m/')
-        side_photo = models.ImageField(upload_to='pets/photos/side/%Y/%m/', blank=True, null=True)
-        size_photo = models.ImageField(upload_to='pets/photos/size/%Y/%m/', blank=True, null=True)
-
+        chip = models.CharField(max_length=20, blank=True, null=True, default='Sem Chip')
+        status = models.CharField(max_length=20, choices=STATUS, default="PR")
+    
+        photo = models.ImageField(upload_to='pets/photos/front/%Y/%m/', blank=True, null=True)
+        
         #Metadados
         created_at = models.DateTimeField(auto_now_add=True)
         update_at = models.DateTimeField(auto_now=True)
-        bg_color = models.CharField(max_length=20, blank=True, null=True, default='')
-
         
         def __str__(self):
             return self.name

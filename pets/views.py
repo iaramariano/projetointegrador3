@@ -3,8 +3,8 @@ from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .forms import PetsModForm, SectorModForm, MedicalEventForm, NewStatusForm, MedicalEventSectorForm, SectorSelectForm
-from .models import PetsMod, SectorMod, MedicalEventMod
+from .forms import PetsModForm, MedicalEventForm, NewStatusForm
+from .models import PetsMod, MedicalEventMod
 
 from .services import register_medical_event_pet, register_medical_event_sector
 
@@ -40,7 +40,7 @@ def panel(request):
 # ***************************************************************************************************************************************************************
  
 # View básica de listagem de cães. Reage a diversos cenários: usuário logado ou não, listagem com ou sem parâmetros de busca.
-def petlist(request, search=False, filter=False):
+''' def petlist(request, search=False, filter=False):
     
     context = {'search': search, 'filter': filter}
     
@@ -351,7 +351,7 @@ def dog_med_event_view(request, id_pet):
 # ***********************************************************VIEWS RELACIONADAS A USUÁRIOS************************************************************************
 @login_required(login_url='users:login', redirect_field_name='next')
 def users(request):
-    return render(request, 'pets/pages/users.html')
+    return render(request, 'pets/pages/users.html')'''
 
 
 

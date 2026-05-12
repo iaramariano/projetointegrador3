@@ -25,7 +25,7 @@ class PetsMod(models.Model):
         PLACES = [('IN', 'Indefinido'), ('AB', 'Abrigo'), ('GI', 'Gatil Infantil'), ('GA', 'Gatil Adulto'), ('CI', 'Canil Infantil'), 
                   ('CA', 'Canil Adulto'), ('MI', 'Mirim'), ('LT', 'Lar Temporário'), ('LC', 'Lar Temporário CED'), ('TL', 'Trasladada')]
         
-        #Posterior criação de um modelo de PLACEMENTS, nos moldes do de setor,
+        #Posterior criação de um modelo de PLACEMENTS, nos moldes do de setor do abrigo anterior.
         
         #Campos em si na mesma ordem em que aparecem no formulário.
         
@@ -56,9 +56,14 @@ class PetsMod(models.Model):
 
 # Cria o evento para o cãozinho (paciente) e preenche se cão está apto ou não para adoção
 class MedicalEventMod(models.Model):
+    
+    EVENTS = [('CA', 'Castração'), ('CI', 'Cirurgia'), ('CO', 'Consulta'), ('EX', 'Exame'), 
+              ('TR', 'Tratamento'), ('VA', 'Vacinação'), ('OU', 'Outros')]
+    
     id_event = models.AutoField(primary_key=True)
     patient = models.ForeignKey(PetsMod, on_delete=models.CASCADE, related_name='medical_events') 
-    event = models.CharField(max_length=255)
+    event = models.CharField(max_length=255, choices=EVENTS, blank=False, null=False, default='CO')
+    details = models.CharField(max_length=255, blank=True, null=True)
     event_date = models.DateField(auto_now=False, auto_now_add=False, default=date.today)
     change_status = models.BooleanField(default=False)
 

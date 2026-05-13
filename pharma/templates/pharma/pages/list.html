@@ -1,7 +1,119 @@
 {% extends 'global/base.html' %}
 
-{% block title %}Teste - Pharma{% endblock %}
+{% block title %}Lista de Itens em Estoque - Pharma{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
+    <h1>Buscar Itens em Estoque</h1>
+    
+    <!-- Search Form -->
+    <form method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-5">
+                <label for="secondary_name" class="form-label">Nome Secundário</label>
+                <input type="text" class="form-control" id="secondary_name" name="secondary_name" value="{{ query_secondary }}">
+            </div>
+            <div class="col-md-5">
+                <label for="catalog" class="form-label">Catálogo (Nome Primário)</label>
+                <input type="text" class="form-control" id="catalog" name="catalog" value="{{ query_catalog }}">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Results -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Catálogo</th>
+                    <th>Nome Secundário</th>
+                    <th>Lote</th>
+                    <th>Unidade de Estoque</th>
+                    <th>Validade</th>
+                    <th>Quantidade SKU</th>
+                    <th>Quantidade Dosagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stocks %}
+                <tr class="stock-row" data-stock-id="{{ stock.id }}" style="cursor: pointer;">
+                    <td>{{ stock.id }}</td>
+                    <td>{{ stock.catalog.primary_name }}</td>
+                    <td>{{ stock.secondary_name }}</td>
+                    <td>{{ stock.batch_number }}</td>
+                    <td>{{ stock.stocking_unity }}</td>
+                    <td>{% if stock.expiry %}{{ stock.expiry|date:"d/m/Y" }}{% endif %}</td>
+                    <td>{{ stock.sku_qty }}</td>
+                    <td>{{ stock.dosage_qty }}</td>
+                </tr>
+                <tr id="actions-{{ stock.id }}" class="action-row d-none bg-light">
+                    <td colspan="8">
+                        <div class="d-flex justify-content-end gap-2 py-2">
+                            <a href="{% url 'pharma:stock_edit' stock.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                            <a href="{% url 'pharma:stock_delete' stock.id %}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">Nenhum item encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
+    {% if stocks.has_other_pages %}
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="text-muted">
+            Mostrando {{ stocks.start_index }}–{{ stocks.end_index }} de {{ stocks.paginator.count }} itens
+        </div>
+        <nav aria-label="Navegação de página">
+            <ul class="pagination mb-0">
+                <li class="page-item {% if not stocks.has_previous %}disabled{% endif %}">
+                    <a class="page-link" href="{% if stocks.has_previous %}?{% if query_secondary %}secondary_name={{ query_secondary|urlencode }}&{% endif %}{% if query_catalog %}catalog={{ query_catalog|urlencode }}&{% endif %}page={{ stocks.previous_page_number }}{% else %}#{% endif %}" aria-label="Anterior">Anterior</a>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">Página {{ stocks.number }} de {{ stocks.paginator.num_pages }}</span>
+                </li>
+                <li class="page-item {% if not stocks.has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{% if stocks.has_next %}?{% if query_secondary %}secondary_name={{ query_secondary|urlencode }}&{% endif %}{% if query_catalog %}catalog={{ query_catalog|urlencode }}&{% endif %}page={{ stocks.next_page_number }}{% else %}#{% endif %}" aria-label="Próxima">Próxima</a>
+                </li>
+                <li class="page-item {% if stocks.number == stocks.paginator.num_pages %}disabled{% endif %}">
+                    <a class="page-link" href="{% if stocks.has_next %}?{% if query_secondary %}secondary_name={{ query_secondary|urlencode }}&{% endif %}{% if query_catalog %}catalog={{ query_catalog|urlencode }}&{% endif %}page={{ stocks.paginator.num_pages }}{% else %}#{% endif %}" aria-label="Última">Última</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('.stock-row');
+        rows.forEach((row) => {
+            row.addEventListener('click', function () {
+                const stockId = row.dataset.stockId;
+                const activeRow = document.getElementById(`actions-${stockId}`);
+
+                document.querySelectorAll('.action-row').forEach((actionRow) => {
+                    if (actionRow !== activeRow) {
+                        actionRow.classList.add('d-none');
+                    }
+                });
+
+                if (activeRow) {
+                    activeRow.classList.toggle('d-none');
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

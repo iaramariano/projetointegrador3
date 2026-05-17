@@ -29,6 +29,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('newsletter.urls')),
     path('pharma/', include('pharma.urls')),
+    path('medical/', include('medical.urls'))
 ]
 
 if settings.DEBUG:

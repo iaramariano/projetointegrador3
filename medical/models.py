@@ -8,10 +8,11 @@ from model_utils.managers import InheritanceManager
 
 class ProcedCatalogMod(models.Model):
     TYPE_CHOICES = [
+        ('CONSULTA', 'Consulta'),
         ('CIRUGIA', 'Cirurgia'),
         ('EXAME', 'Exame'),
-        ('MEDICAÇÃO', 'Medicação'),
         ('TERAPIA', 'Terapia'),
+        ('TRATAMENTO', 'Tratamento'),
         ('VACINA', 'Vacina')
     ]
 
@@ -29,7 +30,7 @@ class ProcedCatalogMod(models.Model):
     description = models.TextField(blank=True)
                                    
     def __str__(self):
-        return f"{self.name} ({self.get_tipo_display()}): {self.description}"
+        return f"{self.name} : {self.description}"
 
     class Meta:
         verbose_name = "Catálogo de Procedimento"

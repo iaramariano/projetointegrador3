@@ -81,7 +81,7 @@ class ExamMod(MedicalEventMod):
 # Expansão do modelo de eventos médicos para adicionar campos específicos de vacina. Posteriormente, adicionar alertas de próxima dose.
 class VaccineMod(MedicalEventMod):
     batch = models.CharField(max_length=50, blank=True)
-    next_dose = models.DateField(auto_now=False, auto_now_add=False, blank=True)
+    next_dose = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
 
 # Expansão do modelo de eventos médicos para adicionar receitas ou aplicações de medicações. Posteriormente, implantar alertas 

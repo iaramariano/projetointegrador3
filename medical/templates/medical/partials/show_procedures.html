@@ -8,6 +8,7 @@
                 <th scope="col">Espécie</th>
                 <th scope="col">Obrigatório (para adoção)</th>
                 <th scope="col">Há alternativas para esse procedimento?</th>
+                <th scope="col">Editar procedimento</th>
             </tr>
         </thead>
     
@@ -33,6 +34,16 @@
                             Não
                         {% endif %}
                     </td>                        
+                    <td class="text-center">
+                        <form method="POST" action="{% url 'medical:catalog_edit' %}" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="procedure_id" value="{{ procedure.id }}">
+                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline text-decoration-none text-warning">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </form>
+                    </td>
+                
                 </tr>
             {% endfor %}
         </tbody>

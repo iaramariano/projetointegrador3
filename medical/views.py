@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import ProcedCatalogMod
 from django.contrib.auth.decorators import login_required
 from .forms import CatalogForm
@@ -51,6 +51,20 @@ def catalog_list(request):
 def catalog_register(request):
 
     if request.method == 'POST':    
+        
+        
+        
+        # Verifica se se trata de uma edição de procedimento
+        procedure_id = request.POST.get('procedure_id')
+
+        if procedure_id:
+
+            procedure_to_edit = get_object_or_404(ProcedCatalogMod, id=procedure_id)
+            form = CatalogForm(instance=procedure_to_edit)
+
+            context['form'] = form
+            return render(request, 'medical/pages/catalog_register.html', context=context)
+
         form = CatalogForm(request.POST)
         
         if form.is_valid():

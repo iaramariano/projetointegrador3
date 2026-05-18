@@ -68,6 +68,25 @@
     </a>
   </div>
 
+    <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'pharma:pharmagen' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa fa-plus-square mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">FARMÁCIA</span>
+    </a>
+  </div>
+
+ 
+  
+</div>
+
+
+<div class="spacing-row"></div>
+<div class="spacing-row"></div>
+
+
+  <div class="row mt-3">
+
+  
   <div class="col-12 col-md-4 d-flex flex-column align-items-center">
     <form method="POST" action={% url 'users:logout' %}>
       {% csrf_token %}
@@ -78,5 +97,7 @@
       </button>
     </form>
   </div>
+  
 </div>
-{% endblock %}
+
+{% endblock %} 

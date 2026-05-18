@@ -8,11 +8,11 @@ from .models import ProcedCatalogMod, MedicalEventMod, VaccineMod
 # Formulário para cadastro de procedimentos
 
 class CatalogForm(forms.ModelForm):
-
+    
     species_choices = ProcedCatalogMod.SPECIES_CHOICES
-    species_choices.append(('TODAS', 'Todas'))
-
-
+    species_choices.append(('Todas', '--- TODAS ---'))
+    
+    
     name = forms.CharField(
         label='Nome do procedimento',
         required=True,
@@ -68,12 +68,13 @@ class CatalogForm(forms.ModelForm):
 
     description = forms.CharField(
         label='Descrição',
+        required=False,
         widget = forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder':'Breve descrição do procedimento'})
     )
     
     class Meta:
         model = ProcedCatalogMod
-        fields = ['name', 'type', 'species', 'min_application', 'min_interval', 'repetition', 'mandatory', 'alternatives', 'description']
+        fields = ['name', 'type', 'min_application', 'min_interval', 'repetition', 'mandatory', 'alternatives', 'description']
         
     def __init__(self, *args, **kwargs):
         
@@ -82,3 +83,11 @@ class CatalogForm(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data.get('name', '')
         return name.capitalize()
+    
+    def clean_species(self):
+        species = self.data.get('species')
+        
+        if species == 'Todas':
+            return 'Todas'
+        
+        return self.fields['species'].clean(species)

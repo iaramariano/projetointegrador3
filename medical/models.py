@@ -8,15 +8,15 @@ from model_utils.managers import InheritanceManager
 
 class ProcedCatalogMod(models.Model):
     TYPE_CHOICES = [
-        ('AVALIAÇÃO', 'Avaliação Médico-Veterinária'),
-        ('CIRUGIA', 'Cirurgia'),
-        ('EXAME', 'Exame Laboratorial'),
-        ('TERAPIA', 'Terapia'),
-        ('TRATAMENTO', 'Tratamento'),
-        ('VACINA', 'Vacina')
+        ('Avaliação Médico-Veterinária', '--- AVALIAÇÃO MÉDICO-VETERINÁRIA ---'),
+        ('Cirurgia', '--- CIRURGIA ---'),
+        ('Exame Laboratorial', '--- EXAME LABORATORIAL ---'),
+        ('Terapia', '--- TERAPIA ---'),
+        ('Tratamento', '--- TRATAMENTO ---'),
+        ('Vacina', '--- VACINA ---')
     ]
 
-    SPECIES_CHOICES = [('GATO', 'Gato'), ('CÃO', 'Cão')]
+    SPECIES_CHOICES = [('Gato', '--- GATO ---'), ('Cão', '--- CÃO ---')]
     
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=False, null=False)

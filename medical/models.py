@@ -8,9 +8,9 @@ from model_utils.managers import InheritanceManager
 
 class ProcedCatalogMod(models.Model):
     TYPE_CHOICES = [
-        ('CONSULTA', 'Consulta'),
+        ('AVALIAÇÃO', 'Avaliação Médico-Veterinária'),
         ('CIRUGIA', 'Cirurgia'),
-        ('EXAME', 'Exame'),
+        ('EXAME', 'Exame Laboratorial'),
         ('TERAPIA', 'Terapia'),
         ('TRATAMENTO', 'Tratamento'),
         ('VACINA', 'Vacina')
@@ -20,7 +20,7 @@ class ProcedCatalogMod(models.Model):
     
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=False, null=False)
-    type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    type = models.CharField(max_length=40, choices=TYPE_CHOICES)
     species = models.CharField(max_length=10, choices=SPECIES_CHOICES)
     min_application = models.IntegerField(default=1)
     min_interval = models.IntegerField(blank=True, null=True)

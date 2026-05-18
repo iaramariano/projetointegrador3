@@ -39,7 +39,7 @@ class CatalogForm(forms.ModelForm):
          label='Procedimento obrigatório para adoção',
          required=False, 
          initial=False, 
-         widget= forms.CheckboxInput(attrs={'class': 'form-check-input'})
+         widget= forms.CheckboxInput(attrs={'class': 'form-check-input', 'onchange':'mandatorySection();'})
     )
 
     min_application = forms.IntegerField(

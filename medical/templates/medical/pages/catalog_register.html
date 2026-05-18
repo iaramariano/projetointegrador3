@@ -5,6 +5,9 @@
 
 {% block content %}
 
+{% include "medical/partials/message_toast.html" %}
+
+
 <div class="container mt-5">
     
     <div class="row justify-content-center">
@@ -15,82 +18,103 @@
     
     <div class="row mt-3 justify-content-center">           
         <div class="col-md-8">
-            <h5 class="border-bottom pb-2 mb-3">Informações do Procedimento</h5>
+            <h4 class="border-bottom border-section pb-2 mb-3">Informações do Procedimento</h4>
         </div>
     </div>
 
-    <div class="row mt-1 justify-content-center">           
-        <div class="col-md-8">
+    <form method="post" novalidate>
+    {% csrf_token %}
+    
+        <div class="row mt-1 justify-content-center">           
+            <div class="col-md-8">
+            
+                <div class="row g-3 justify-content-between" > 
+                    <div class="col-md-5 d-flex flex-column align-items-center">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                        {{ form.name }} 
+                    </div>
+            
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <label for="{{ form.type.id_for_label }}" class="form-label">{{ form.type.label }}</label>
+                        <div class="w-75"> {{ form.type }}</div>
+                    </div>
+                </div> 
         
-            <div class="row g-3 justify-content-between" > 
-                <div class="col-md-5 d-flex flex-column align-items-center">
-                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
-                    {{ form.name }} 
-                </div>
-            
-                <div class="col-md-4 d-flex flex-column align-items-center">
-                    <label for="{{ form.type.id_for_label }}" class="form-label">{{ form.type.label }}</label>
-                    <div class="w-75"> {{ form.type }}</div>
-                </div>
-            </div> 
-        
-            <div class="row g-3 mt-3 justify-content-between">
-                <div class="col-md-5 d-flex flex-column align-items-center">
-                    <label for ="{{ form.species.id_for_label }}" class="form-label">{{ form.species.label }}</label>
-                    <div class="w-25">{{form.species}}</div>
-                </div>
+                <div class="row g-3 mt-3 justify-content-between">
+                    <div class="col-md-5 d-flex flex-column align-items-center">
+                        <label for ="{{ form.species.id_for_label }}" class="form-label">{{ form.species.label }}</label>
+                        <div class="w-25">{{form.species}}</div>
+                    </div>
 
-                <div class="col-md-4 d-flex flex-column align-items-center">
-                    <label for = "{{ form.mandatory.id_for_label}}">{{ form.mandatory.label }}</label>
-                        {{form.mandatory}}
-                </div>
-            </div>  
-        </div> 
-    </div>
-
-    <div class="d-none" id="mandatory-section">
-    <div class="row mt-3 justify-content-center">           
-        <div class="col-md-8">
-            <h5 class="border-bottom pb-2 mb-3">Informações para Procedimentos obrigatórios</h5>
-        </div>
-    </div>
-
-    <div class="row mt-3 justify-content-center">           
-        <div class="col-md-8">
-            
-            <div class="row g-3 justify-content-between">
-                <div class="col-4 d-flex flex-column align-items-center">
-                        <label for="{{ form.min_application.id_for_label }}" class="form-label"> {{form.min_application.label}}</label>
-                        <div class="w-50">{{ form.min_application }}</div>
-                </div>
-
-                <div class="col-4 d-flex flex-column align-items-center">
-                    <label for="{{ form.min_interval.id_for_label }}" class="form-label"> {{form.min_interval.label}}</label>
-                    <div class="w-50">{{ form.min_interval }}</div>
-                </div>
-            
-                <div class="col-4 d-flex flex-column align-items-center">
-                    <label for="{{ form.repetition.id_for_label }}" class="form-label"> {{form.repetition.label}}</label>
-                    <div class="w-50">{{ form.repetition }}</div>
-                </div>
-            </div>
-            
-
-            <div class="row mt-3 g-3 justify-content-between">
-                <div class="col-12 d-flex flex-column align-items-center">
-                    <label for="{{ form.alternatives.id_for_label }}" class="form-label"> {{form.alternatives.label}}</label>
-                    <div class="w-75">{{ form.alternatives }}</div>
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <label for = "{{ form.mandatory.id_for_label}}">{{ form.mandatory.label }}</label>
+                            {{form.mandatory}}
+                    </div>
                 </div>  
             </div> 
+        </div>
 
-            <div class="row mt-3 g-3 justify-content-between">
-                <div class="col-md-12 d-flex flex-column align-items-center">
-                    <label for="{{ form.description.id_for_label }}" class="form-label"> {{form.description.label}}</label>
-                    <div class="w-75">{{ form.description }}</div>
+        <div class="d-none" id="mandatory-section">
+            <div class="row mt-3 justify-content-center">           
+                <div class="col-md-8">
+                    <h4 class="border-bottom border-section pb-2 mb-3">Informações para Procedimentos obrigatórios</h4>
+                </div>
+            </div>
+
+            <div class="row mt-3 justify-content-center">           
+                <div class="col-md-8">
+            
+                    <div class="row g-3 justify-content-between">
+                        <div class="col-4 d-flex flex-column align-items-center">
+                            <label for="{{ form.min_application.id_for_label }}" class="form-label"> {{form.min_application.label}}</label>
+                            <div class="w-50">{{ form.min_application }}</div>
+                        </div>
+
+                        <div class="col-4 d-flex flex-column align-items-center">
+                            <label for="{{ form.min_interval.id_for_label }}" class="form-label"> {{form.min_interval.label}}</label>
+                            <div class="w-50">{{ form.min_interval }}</div>
+                        </div>
+            
+                        <div class="col-4 d-flex flex-column align-items-center">
+                            <label for="{{ form.repetition.id_for_label }}" class="form-label"> {{form.repetition.label}}</label>
+                            <div class="w-50">{{ form.repetition }}</div>
+                        </div>
+                    </div>
+            
+                    <div class="row mt-3 g-3 justify-content-between">
+                        <div class="col-12 d-flex flex-column align-items-center">
+                            <label for="{{ form.alternatives.id_for_label }}" class="form-label"> {{form.alternatives.label}}</label>
+                            <div class="w-75">{{ form.alternatives }}</div>
+                        </div>  
+                    </div> 
+
+                    <div class="row mt-3 g-3 justify-content-between">
+                        <div class="col-md-12 d-flex flex-column align-items-center">
+                            <label for="{{ form.description.id_for_label }}" class="form-label"> {{form.description.label}}</label>
+                            <div class="w-75">{{ form.description }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+        <div class="row mt-1 justify-content-center">           
+            <div class="col-md-8">
+                <div class="row mt-3 g-3 justify-content-between">
+                    
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2 d-flex flex-column align-items-center">
+                        <button type="submit" class="btn btn-primary btn-login btn-lg" id="btn_registrar">REGISTRAR</button>
+                    </div>
+                    <div class="col-md-2 d-flex flex-column align-items-center">
+                        <button type="reset" class="btn btn-primary btn-login btn-lg" id="btn_limpar">LIMPAR</button>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+{% endblock %}
+{% block scripts %}
+    <script src= "{% static 'medical/js/medical_script.js' %}"></script>
 {% endblock %}

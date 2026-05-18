@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import ProcedCatalogMod
 from django.contrib.auth.decorators import login_required
 from .forms import CatalogForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -49,14 +50,43 @@ def catalog_list(request):
 
 def catalog_register(request):
 
-    form = CatalogForm()
+    if request.method == 'POST':    
+        form = CatalogForm(request.POST)
+        
+        if form.is_valid():
+            
+            if form.cleaned_data['species'] == 'AMBAS':
+                
+                species_pl = ['Cão', 'Gato']
 
-    context = {
-        'form': form
-    }
+                for species_name in species_pl:
+                    proced_spec = ProcedCatalogMod(
+                        name = form.cleaned_data['name'],
+                        type = form.cleaned_data['type'],
+                        species = species_name,
+                        min_application =  form.cleaned_data['min_application'],
+                        min_interval = form.cleaned_data['min_interval'],
+                        repetition = form.cleaned_data['repetition'],
+                        mandatory = form.cleaned_data['mandatory'],
+                        alternatives = form.cleaned_data['alternatives'],
+                        description = form.cleaned_data['description']
+                        )
+                    
+                    proced_spec.save()
+            else:
 
-    return render(request, 'medical/pages/catalog_register.html', context=context)
-
-
-
-
+                form.save()
+            
+            messages.success(request, 'Procedimento registrado com sucesso!')
+            return redirect('medical:catalog_list')
+        
+        else:
+            messages.error(request, 'Erro ao registrar o procedimento. Verifique os dados.')
+    
+    else:
+        
+        form = CatalogForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'medical/pages/catalog_register.html', context=context)

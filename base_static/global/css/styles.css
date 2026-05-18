@@ -224,10 +224,11 @@ select option:hover{
 
 }
 
-border-bottom{
-    border-color: #B26E39;
+.border-section {
+    border-color: #EDBF73 !important; 
+    border-width: 2px !important;
+    color: #533E1A !important;
 }
-
 
 /******************************************MAIN PANEL PAGE STYLES******************************/
 .btn-icon {

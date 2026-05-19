@@ -6,33 +6,43 @@ from .models import PetsMod, MedicalEventMod
 # *********************************************FORMULÁRIO PARA REGISTRO DE CÃES*********************************************
 
 class PetsModForm(forms.ModelForm):
+    age = forms.IntegerField(
+        min_value=0,
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control text-center form-field-md',
+            'placeholder': 'Idade do Animal',
+            'min': 0,
+        })
+    )
+
     class Meta:
         model = PetsMod
         fields = ['species', 'name', 'sex', 'age', 
                   'arrival', 'arrival_date', 'placement', 
                   'history', 'chip', 'status', 'photo']
                   
-        widgets = {'species': forms.RadioSelect(attrs={'class': 'form-check-input ms-3 me-2'}),
-                   'name': forms.TextInput(attrs={'class': 'form-control text-center form-field-lg', 'placeholder': 'Nome do Animal'}),
-                   'sex': forms.RadioSelect(attrs={'class': 'form-check-input ms-3 me-2'}),
-                   
-                   'age': forms.TextInput(attrs={'class': 'form-control text-center form-field-md', 'value': 'Idade do Animal'}),
-                   'arrival': forms.Select(attrs={'class': 'form-select text-center form-field-md'}),
-                   'arrival_date': forms.DateField(),
-                   'placement': forms.Select(attrs={'class': 'form-select text-center form-field-md'}),                                                                             
-
-                    'history': forms.Textarea(attrs={'class': 'form-control text-center', 'placeholder': 'Histórico do Animal'}),
-                    'chip': forms.TextInput(attrs={'class': 'form-control text-center form-field-md', 'value': 'Número do chip'}),
-                   'status': forms.Select(attrs={'class': 'form-select text-center form-field-md'})
-                    }
+        widgets = {
+            'species': forms.Select(attrs={'class': 'form-select text-center form-field-md'}),
+            'name': forms.TextInput(attrs={'class': 'form-control text-center form-field-lg', 'placeholder': 'Nome do Animal'}),
+            'sex': forms.RadioSelect(attrs={'class': 'form-check-input ms-3 me-2'}),
+            'age': forms.NumberInput(attrs={'class': 'form-control text-center form-field-md', 'placeholder': 'Idade do Animal', 'min': 0}),
+            'arrival': forms.Select(attrs={'class': 'form-select text-center form-field-md'}),
+            'arrival_date': forms.DateInput(attrs={'class': 'form-control text-center form-field-md', 'type': 'date'}),
+            'placement': forms.Select(attrs={'class': 'form-select text-center form-field-md'}),
+            'history': forms.Textarea(attrs={'class': 'form-control text-center', 'placeholder': 'Histórico do Animal', 'rows': 4}),
+            'chip': forms.TextInput(attrs={'class': 'form-control text-center form-field-md', 'placeholder': 'Número do chip'}),
+            'status': forms.Select(attrs={'class': 'form-select text-center form-field-md'}),
+            'photo': forms.ClearableFileInput(attrs={'class': 'form-control text-center form-field-md'})
+        }
     
     def __init__(self, *args, **kwargs):
-        
         super().__init__(*args, **kwargs)
         self.fields['sex'].empty_label = None
         self.fields['sex'].required = True
-        self.fields['front_photo'].widget.initial_text = 'Foto atual'
-        self.fields['front_photo'].widget.input_text = 'Escolher outra'
+        if 'photo' in self.fields:
+            self.fields['photo'].widget.initial_text = 'Foto atual'
+            self.fields['photo'].widget.input_text = 'Escolher outra'
 
     def clean_name(self):
         name = self.cleaned_data.get('name', '')

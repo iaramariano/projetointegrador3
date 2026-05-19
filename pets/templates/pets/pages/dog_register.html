@@ -17,15 +17,10 @@
   </div>
     
   {% else %}
-    <h2 class="text-center mt-3">CADASTRAR CÃO</h2>      
+    <h2 class="text-center mt-3">CADASTRO DE PETS</h2>      
   {% endif %}
   
-  <form id="dog_register" method="POST" enctype="multipart/form-data" action="
-  {% if form.instance and form.instance.id_pet %}  
-    {% url 'pet:pet_update' form.instance.id_pet %}
-  {% else %}
-    {% url 'pet:pet_create' %}
-  {% endif %}">
+  <form id="dog_register" method="POST" enctype="multipart/form-data" action="{% if form.instance and form.instance.id_pet %}{% url 'pet:pet_update' form.instance.id_pet %}{% else %}{% url 'pet:pet_create' %}{% endif %}">
   {% csrf_token %}
     <!--LINHA DE DADOS BÁSICOS-->
     <div class="row mt-3">
@@ -89,11 +84,20 @@
       <div class="text-center">
         <button type="submit" class="btn btn-primary mb-3 mt-3 me-3 btn-login" id="btn_registrar">REGISTRAR</button>
         <button type="reset" class="btn btn-primary ms-3 mb-3 mt-3 me-3 btn-login" id="btn_limpar">LIMPAR</button>
-        <a href={% url 'pet:panel' %} role="button" class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login" id="btn_voltar">VOLTAR</a></form>
-        {% if form.instance and form.instance.id_pet %} <form method="POST" action="{% url 'pet:pet_delete' form.instance.id_pet %}"> {% csrf_token %} <button type="submit" class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login btn-danger" id="btn_excluir">EXCLUIR</button></form>{% endif%}
+        <a href="{% url 'pet:panel' %}" role="button" class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login" id="btn_voltar">VOLTAR</a>
       </div>
     </div>
   </form>
+  {% if form.instance and form.instance.id_pet %}
+    <form method="POST" action="{% url 'pet:pet_delete' form.instance.id_pet %}">
+      {% csrf_token %}
+      <div class="row mt-3">
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login btn-danger" id="btn_excluir">EXCLUIR</button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
 {% endblock %}
 {% block scripts %}
 <script src= "{% static 'pets/js/pet_register.js' %}"></script>

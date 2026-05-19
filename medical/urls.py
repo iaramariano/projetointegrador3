@@ -9,9 +9,19 @@ app_name = 'medical'
 
 urlpatterns = [
    
-    path('', views.medical_home, name='home'), #Página inicial do app medical
-    path('list/', views.catalog_list, name='catalog_list'),
-    path('register/', views.catalog_register, name='catalog_register'),
-    path('edit_procedure/<int:procedure_id>', views.catalog_register, name='catalog_edit')
-    #path('api/catalog/<int:catalog_id>/', views.catalog_detail, name='catalog_detail'),
+    
+    # Página inicial do app medical
+    path('', views.medical_home, name='home'),
+    
+    # Páginas relacionadas ao catálogo de procedimentos
+    path('procedure/list/', views.catalog_list, name='catalog_list'),
+    path('procedure/register/', views.catalog_register, name='catalog_register'),
+    path('procedure/save/', views.catalog_save, name='catalog_save'),
+    path('procedure/edit/', views.catalog_edit, name='catalog_edit'),
+    path('procedure/delete/', views.catalog_delete, name='catalog_delete'),
+
+    # Páginas relacionadas a eventos médicos
+
+    path('event/new/', views.event_type_select, name='event_type_select'),
+    path('event/new/exam/', views.event_new_exam, name='event_new_exam')
 ]

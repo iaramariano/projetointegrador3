@@ -8,7 +8,7 @@
                 <th scope="col">Espécie</th>
                 <th scope="col">Obrigatório (para adoção)</th>
                 <th scope="col">Há alternativas para esse procedimento?</th>
-                <th scope="col">Editar procedimento</th>
+                <th scope="col">Ações</th>
             </tr>
         </thead>
     
@@ -34,16 +34,29 @@
                             Não
                         {% endif %}
                     </td>                        
+                    
+                    <!-- Coluna Ações-->
                     <td class="text-center">
-                        <form method="POST" action="{% url 'medical:catalog_edit' %}" class="d-inline">
+                        
+                        <!-- Botão Editar-->
+                        <form method="POST" action="{% url 'medical:catalog_edit' %}" style="display: inline;" >
                         {% csrf_token %}
-                        <input type="hidden" name="procedure_id" value="{{ procedure.id }}">
-                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline text-decoration-none text-warning">
+                            <input type="hidden" name="procedure_id" value="{{ procedure.id }}">
+                            <button type="submit" class="btn btn-table-submit" title="Editar Procedimento">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                         </form>
+
+
+                        <!-- Botão Excluir -->
+                        <form method="POST" action="{% url 'medical:catalog_delete' %}" style="display: inline;" >
+                        {% csrf_token %}
+                            <input type="hidden" name="procedure_id" value="{{ procedure.id }}">
+                            <button type="submit" class="btn btn-table-submit" title="Excluir Procedimento">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>    
+                        </form>
                     </td>
-                
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,10 +1,6 @@
 from django import forms
 from .models import ProcedCatalogMod, MedicalEventMod, VaccineMod
 
-
-
-
-
 # Formulário para cadastro de procedimentos
 
 class CatalogForm(forms.ModelForm):

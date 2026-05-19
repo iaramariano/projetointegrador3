@@ -9,28 +9,27 @@
   
 
 <div class="row g-0 h-100 pet-card-row border rounded shadow-sm" style="overflow: hidden;">
-    <div class="col-md-6 col-12"> <img src="{{ pet.front_photo.url }}" class="img-fluid w-100 h-100 object-fit-cover" alt="Foto frontal de {{ pet.name }}">
+    <div class="col-md-6 col-12">
+      {% if pet.photo %}
+        <img src="{{ pet.photo.url }}" class="img-fluid w-100 h-100 object-fit-cover" alt="Foto de {{ pet.name }}">
+      {% else %}
+        <img src="{% static 'pets/img/placeholder_front_photo.png' %}" class="img-fluid w-100 h-100 object-fit-cover" alt="Sem foto disponível">
+      {% endif %}
     </div>
-    <div class="col-md-6 col-12 {{ bg_color }} p-3 d-flex flex-column justify-content-center">
-      <h2 class="pet-name text-truncate">
-        {% if request.user.is_authenticated and not months %}
-          <a href="{% url 'pet:pet_view' pet.id_pet %}" class="stretched-link">{{ pet.name }}</a>
-        {% else %}
-          {{ pet.name }}
-        {% endif %}
-      </h2>
+    <div class="col-md-6 col-12 {{ bg_color }} p-3 d-flex flex-column justify-content-center position-relative">
+      <h2 class="pet-name text-truncate">{{ pet.name }}</h2>
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'pet:pet_view' pet.id_pet %}" class="stretched-link" aria-label="Editar {{ pet.name }}"></a>
+      {% endif %}
 
       <ul class="pet-info list-unstyled">
-        <li>{{ pet.get_sex_display }}</li>
-        <li>Castrado</li>
-        <li>Vacinado</li>
-        <hr>
-        <li><strong>nasc:</strong> {{ pet.birth|date:"M"}} {{ pet.birth|date:"Y"}}</li>
-        <li><strong>porte:</strong> {{ pet.get_size_display }}</li>
-        {% if pet.aptitude == 'IN' %}
-          <hr>
-          <li><strong style="font-size:1rem;">NÃO APTO À ADOÇÃO</strong></li>
+        <li>{{ pet.get_species_display }} / {{ pet.get_sex_display }}</li>
+        <li><strong>Situação:</strong> {{ pet.get_status_display }}</li>
+        {% if pet.age is not None %}
+          <li><strong>Idade:</strong> {{ pet.age }} mês{% if pet.age != 1 %}es{% endif %}</li>
         {% endif %}
+        <li><strong>Chegada:</strong> {% if pet.arrival_date %}{{ pet.arrival_date|date:"d/m/Y" }}{% else %}N/A{% endif %}</li>
+        <li><strong>Local:</strong> {{ pet.get_placement_display }}</li>
       </ul>
     </div>
 </div>
@@ -56,6 +55,3 @@
       </div>
     </div>
   </div>-->
-{% if request.user.is_authenticated and not months%}
-  </a>
-{% endif %}

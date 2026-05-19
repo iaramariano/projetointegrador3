@@ -1,0 +1,32 @@
+{% extends 'global/base.html' %}
+
+{% block title %}Confirmar Exclusão - Pharma{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Confirmar Exclusão</h3>
+                </div>
+                <div class="card-body">
+                    <p>Tem certeza que deseja excluir o item de estoque abaixo?</p>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item"><strong>ID:</strong> {{ stock.id }}</li>
+                        <li class="list-group-item"><strong>Catálogo:</strong> {{ stock.catalog.primary_name }}</li>
+                        <li class="list-group-item"><strong>Nome Secundário:</strong> {{ stock.secondary_name }}</li>
+                        <li class="list-group-item"><strong>Lote:</strong> {{ stock.batch_number }}</li>
+                    </ul>
+
+                    <form method="post" class="d-flex gap-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Excluir definitivamente</button>
+                        <a href="{% url 'pharma:list' %}" class="btn btn-outline-secondary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

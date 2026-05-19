@@ -1,71 +1,18 @@
-{% load static%}
-
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-
+{% load static %}
 
 <div class="row">
-  <!-- FOTO FRONTAL-->
-  <div class="col-md-4 text-center">
-
-   <!-- {% if form.instance.front_photo %}
-      <p>URL da imagem: {{ form.instance.front_photo.url }}</p>
-      <p>Nome do arquivo (key no S3): {{ form.instance.front_photo.name }}</p>
-    {% endif %}-->
-
-              
+  <div class="col-md-12 text-center">
     <div class="preview-container justify-content-center d-flex flex-column align-items-center">
-      {% if form.instance.front_photo %}
-        <img id="frontPreview" src="{{ form.instance.front_photo.url }}" alt="Prévia da foto frontal" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+      {% if form.instance.photo %}
+        <img id="photoPreview" src="{{ form.instance.photo.url }}" alt="Prévia da foto do pet" class="img-fluid" style="max-width: 300px; max-height: 300px;">
       {% else %}
-        <img id="frontPreview" src="{% static 'pets/img/placeholder_front_photo.png' %}" alt="Prévia da foto frontal" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+        <img id="photoPreview" src="{% static 'pets/img/placeholder_front_photo.png' %}" alt="Prévia da foto do pet" class="img-fluid" style="max-width: 300px; max-height: 300px;">
       {% endif %}
-
-    </div>
-      
-    <div class="mb-3 justify-content-center d-flex flex-column align-items-center">
-      <label for="frontPhoto" class="form-label">Foto Frontal</label>
-      {{ form.front_photo }}
-    </div>
-    
-  </div>
-          
-  <!--FOTO LATERAL-->
-   <div class="col-md-4 text-center">
-     
-    <div class="preview-container justify-content-center d-flex flex-column align-items-center">
-      {% if form.instance.side_photo %}
-        <img id="sidePreview" src="{{ form.instance.side_photo.url }}" alt="Prévia da foto lateral" class="img-fluid" style="max-width: 200px; max-height: 200px;">
-      {% else %}
-        <img id="sidePreview" src="{% static 'pets/img/placeholder_side_photo.png' %}" alt="Prévia da foto lateral" class="img-fluid" style="max-width: 200px; max-height: 200px;">
-      {% endif %}
-      
     </div>
 
-    <div class="mb-3 justify-content-center d-flex flex-column align-items-center">
-      <label for="sidePhoto" class="form-label">Foto Lateral</label>
-      {{ form.side_photo }}
+    <div class="mb-3 justify-content-center d-flex flex-column align-items-center mt-3">
+      <label for="{{ form.photo.id_for_label }}" class="form-label">Foto do Pet</label>
+      {{ form.photo }}
     </div>
-     
   </div>
-          
-  <!--FOTO DO PORTE-->
-<div class="col-md-4 text-center">
-  
-    <div class="preview-container justify-content-center d-flex flex-column align-items-center">
-      {% if form.instance.size_photo %}
-        <img id="sizePreview" src="{{ form.instance.size_photo.url }}" alt="Prévia da foto do porte" class="img-fluid" style="max-width: 200px; max-height: 200px;">
-      {% else %}
-        <img id="sizePreview" src="{% static 'pets/img/placeholder_size_photo.png' %}" alt="Prévia da foto do porte" class="img-fluid" style="max-width: 200px; max-height: 200px;">
-      {% endif %}
-      
-    </div>
-
-    <div class="mb-3 justify-content-center d-flex flex-column align-items-center">
-      <label for="sizePhoto" class="form-label">Foto do Porte</label>
-      {{ form.size_photo }}
-    </div>
-  
-  </div>
-  
 </div>

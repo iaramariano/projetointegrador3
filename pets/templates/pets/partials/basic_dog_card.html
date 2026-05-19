@@ -1,6 +1,12 @@
 <!-- PRIMEIRA LINHA-->
 <div class="row mt-3 g-3 align-items-center">
 
+    <!-- ESPÉCIE -->
+    <div class="col-12 col-md-4 text-center">
+        <label for="{{ form.species.id_for_label }}" class="form-label register-form-title">ESPÉCIE</label>
+        {{ form.species }}
+    </div>
+  
     <!-- NOME -->
     <div class="col-12 col-md-4 text-center">
         <label for="{{ form.name.id_for_label }}" class="form-label register-form-title">NOME</label>
@@ -11,7 +17,6 @@
     <div class="col-12 col-md-4 text-center">
         <label class="form-label register-form-title">SEXO</label>
         <div class="d-flex justify-content-center">
-                    
             {% for radio in form.sex %}
                 <div class="form-check form-check-inline custom-radio">
                     {{ radio }}
@@ -19,50 +24,37 @@
             {% endfor %}
         </div>
     </div>
-  
-    <!-- NASCIMENTO -->
-    <div class="col-12 col-md-4 text-center">
-        <label class="form-label register-form-title">NASCIMENTO</label>
-        <div class="d-flex justify-content-center">
-        
-            <!-- MÊS -->
-            <select id="birth_month" name="birth_month" class="form-select text-center form-field-xs mx-4" required>
-                {% for value, name in months %}
-                    <option value="{{ value }}" {% if value == pet.birth|date:"m" %} selected {% endif %}>{{ name }}</option>
-                {% endfor %}
-            </select>
-  
-            <!-- ANO -->                
-            <select id="birth_year" name="birth_year" class="form-select text-center form-field-xs mx-4" required>
-                {% for year in years %}
-                    <option value="{{ year }}" {% if year == pet.birth|date:"Y" %} selected {% endif %}>{{ year }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
-</div>       
+</div>
 <div class="spacing-row"></div>
         
         <!-- SEGUNDA LINHA -->
 <div class="row mt-3 g-3 align-items-center">
 
-    <!-- RAÇA -->
+    <!-- IDADE -->
     <div class="col-12 col-md-4 text-center">
-        <label for="{{ form.breed.id_for_label }}" class="form-label register-form-title">RAÇA</label>
-        {{ form.breed }}
+        <label for="{{ form.age.id_for_label }}" class="form-label register-form-title">IDADE (meses)</label>
+        {{ form.age }}
     </div>
       
-    <!-- PORTE -->
+    <!-- CHEGADA -->
     <div class="col-12 col-md-4 text-center">
-        <label for="{{ form.size.id_for_label }}" class="form-label register-form-title">PORTE</label>
-        {{ form.size }}
+        <label for="{{ form.arrival.id_for_label }}" class="form-label register-form-title">CHEGADA</label>
+        {{ form.arrival }}
     </div>
       
-    <!-- SETOR -->
+    <!-- DATA DE CHEGADA -->
     <div class="col-12 col-md-4 text-center">
-        <label for="{{ form.sector.id_for_label }}" class="form-label register-form-title">SETOR</label>
-        {{ form.sector }}
+        <label for="{{ form.arrival_date.id_for_label }}" class="form-label register-form-title">DATA DE CHEGADA</label>
+        {{ form.arrival_date }}
     </div>
             
 </div>
-<!-- FIM DO CARD RETRÁTIL DE REGISTRO DE CÃO-->
+<div class="spacing-row"></div>
+<div class="row mt-3 g-3 align-items-center">
+    <!-- LOCALIZAÇÃO -->
+    <div class="col-12 col-md-4 text-center">
+        <label for="{{ form.placement.id_for_label }}" class="form-label register-form-title">LOCALIZAÇÃO</label>
+        {{ form.placement }}
+    </div>
+</div>
+<!-- FIM DO CARD RETRÁTIL DE REGISTRO DE CÃO--> 

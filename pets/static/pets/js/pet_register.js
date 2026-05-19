@@ -1,62 +1,84 @@
+function createHiddenInput(name, value) {
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = name;
+  input.value = value;
+  return input;
+}
 
-function joinBirth() { //Une os selects de mês e ano de nascimento e o transforma em uma data válida para gravação 
+function joinBirth() {
+  const birthMonthEl = document.getElementById('birth_month');
+  const birthYearEl = document.getElementById('birth_year');
 
-  //Pega o mês e ano de nascimento e os une formando uma data válida
-  var birthMonth = document.getElementById("birth_month").value;
-  var birthYear = document.getElementById("birth_year").value;
-  var formattedBirth = birthYear + '-' + birthMonth + '-01'; 
+  if (!birthMonthEl || !birthYearEl) {
+    return null;
+  }
 
-  //Cria um campo invisível, preenche-o com a data válida e retorna-o.
-  var birthDateInput = document.createElement('input');
-  birthDateInput.type = 'hidden';
-  birthDateInput.name = 'birth';  // O nome do campo no Django
-  birthDateInput.value = formattedBirth;  // O valor da data formatada
-  return birthDateInput;
+  const birthMonth = birthMonthEl.value;
+  const birthYear = birthYearEl.value;
+  if (!birthMonth || !birthYear) {
+    return null;
+  }
+
+  return createHiddenInput('birth', birthYear + '-' + birthMonth + '-01');
 }
 
 function joinVaccine() {
+  const vaccineMonthEl = document.getElementById('vaccine_month');
+  const vaccineYearEl = document.getElementById('vaccine_year');
 
-  //Pega o mês e o ano da última vacinação e forma uma data válida
-  var vaccineMonth = document.getElementById("vaccine_month").value;
-  var vaccineYear = document.getElementById("vaccine_year").value;
-  var formattedVacine = vaccineYear + '-' + vaccineMonth + '-01';
-  
-  //Cria um campo invisível, preenche-o com a data válida e retorna-o.
-  var vaccineDateInput = document.createElement('input');
-  vaccineDateInput.type = 'hidden';
-  vaccineDateInput.name = 'vaccine';
-  vaccineDateInput.value = formattedVacine;
-  
-  return vaccineDateInput;
+  if (!vaccineMonthEl || !vaccineYearEl) {
+    return null;
+  }
+
+  const vaccineMonth = vaccineMonthEl.value;
+  const vaccineYear = vaccineYearEl.value;
+  if (!vaccineMonth || !vaccineYear) {
+    return null;
+  }
+
+  return createHiddenInput('vaccine', vaccineYear + '-' + vaccineMonth + '-01');
 }
 
-function joinVermifuge(){
+function joinVermifuge() {
+  const vermifugeMonthEl = document.getElementById('vermifuge_month');
+  const vermifugeYearEl = document.getElementById('vermifuge_year');
 
-  //Pega o mês e o ano da vermifugação e os junta para criar uma data válida
-  var vermifugeMonth = document.getElementById("vermifuge_month").value;
-  var vermifugeYear = document.getElementById("vermifuge_year").value;
-  var formattedVermifuge = vermifugeYear + '-' + vermifugeMonth + '-01';
+  if (!vermifugeMonthEl || !vermifugeYearEl) {
+    return null;
+  }
 
-  //Cria um campo invisível, preenche-o com a data válida e retorna-o.
-  var vermifugeDateInput = document.createElement('input');
-  vermifugeDateInput.type = 'hidden';
-  vermifugeDateInput.name = 'vermifuge';  // O nome do campo no Django
-  vermifugeDateInput.value = formattedVermifuge;  // O valor da data formatada
-  return vermifugeDateInput;
-}        
- 
+  const vermifugeMonth = vermifugeMonthEl.value;
+  const vermifugeYear = vermifugeYearEl.value;
+  if (!vermifugeMonth || !vermifugeYear) {
+    return null;
+  }
+
+  return createHiddenInput('vermifuge', vermifugeYear + '-' + vermifugeMonth + '-01');
+}
+
 function submitForm(event) {
-
-  event.preventDefault(); //Impede o envio do formulário
-
   const form = document.getElementById('dog_register');
-  form.appendChild(joinBirth());
-  form.appendChild(joinVaccine());
-  form.appendChild(joinVermifuge());
+  if (!form) {
+    return;
+  }
+
+  const birthInput = joinBirth();
+  const vaccineInput = joinVaccine();
+  const vermifugeInput = joinVermifuge();
+  const needsScriptSubmit = birthInput || vaccineInput || vermifugeInput;
+
+  if (!needsScriptSubmit) {
+    return;
+  }
+
+  event.preventDefault();
+  if (birthInput) form.appendChild(birthInput);
+  if (vaccineInput) form.appendChild(vaccineInput);
+  if (vermifugeInput) form.appendChild(vermifugeInput);
   form.submit();
 }
 
-//Função que substitui o placeholder por um preview da imagem quando essa é carregada
 function previewImage(event, previewId) {
   const input = event.target;
   const preview = document.getElementById(previewId);
@@ -67,10 +89,13 @@ function previewImage(event, previewId) {
     reader.onload = function(e) {
       preview.src = e.target.result;
       preview.style.display = 'block';
-    }
+    };
 
     reader.readAsDataURL(input.files[0]);
   }
 }
 
-document.getElementById("dog_register").addEventListener("submit", submitForm);
+const dogRegisterForm = document.getElementById('dog_register');
+if (dogRegisterForm) {
+  dogRegisterForm.addEventListener('submit', submitForm);
+}

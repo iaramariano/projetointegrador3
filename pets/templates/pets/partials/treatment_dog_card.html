@@ -1,51 +1,23 @@
 <div class="row mt-3 g-3 align-items-center">
 
-    <!-- VACINAÇÃO -->
-    <div class="col-12 col-md-4 text-center">
-        <label class="form-label register-form-title">ÚLTIMA VACINAÇÃO</label>
-        <div class="d-flex justify-content-center gap-2">
-        
-            <!-- MÊS -->
-            <select id="vaccine_month" name="vaccine_month" class="form-select text-center form-field-xs mx-4" required>
-                {% for value, name in months %}
-                    <option value="{{ value }}" {% if value == pet.vaccine|date:"m" %} selected {% endif %}>{{ name }}</option>
-                {% endfor %}
-            </select>
-
-            <!-- ANO -->
-            <select id="vaccine_year" name="vaccine_year" class="form-select text-center form-field-xs mx-4" required>
-                {% for year in years %}
-                    <option value="{{ year }}" {% if year == pet.vaccine|date:"Y" %} selected {% endif %}>{{ year }}</option>
-                {% endfor %}
-            </select>
-                
-        </div>
+    <!-- CHIP -->
+    <div class="col-12 col-md-6 text-center">
+        <label for="{{ form.chip.id_for_label }}" class="form-label register-form-title">CHIP</label>
+        {{ form.chip }}
     </div>
-        
-    <!-- VERMIFUGAÇÃO -->
-    <div class="col-12 col-md-4 text-center">
-        <label class="form-label register-form-title">ÚLTIMA VERMIFUGAÇÃO</label>
-        <div class="d-flex justify-content-center gap-2">
-        
-        <!-- MÊS -->
-        <select id="vermifuge_month" name="vermifuge_month" class="form-select text-center form-field-xs mx-4" required>
-            {% for value, name in months %}
-                <option value="{{ value }}" {% if value == pet.vermifuge|date:"m" %} selected {% endif %}>{{ name }}</option>
-            {% endfor %}
-        </select>
-
-        <!-- ANO -->
-        <select id="vermifuge_year" name="vermifuge_year" class="form-select text-center form-field-xs mx-4" required>
-            {% for year in years %}
-                <option value="{{ year }}" {% if year == pet.vermifuge|date:"Y" %} selected {% endif %}>{{ year }}</option>
-            {% endfor %}
-        </select>
+      
+    <!-- SITUAÇÃO -->
+    <div class="col-12 col-md-6 text-center">
+        <label for="{{ form.status.id_for_label }}" class="form-label register-form-title">SITUAÇÃO</label>
+        {{ form.status }}
     </div>
 </div>
+<div class="spacing-row"></div>
 
-    <!-- APTIDÃO À ADOÇÃO -->
-    <div class="col-12 col-md-4 text-center">
-        <label for="{{ form.aptitude.id_for_label }}" class="form-label register-form-title ">ADOÇÃO</label>
-        {{ form.aptitude }}
+<div class="row mt-3 g-3 align-items-center">
+    <!-- HISTÓRICO -->
+    <div class="col-12 text-center">
+        <label for="{{ form.history.id_for_label }}" class="form-label register-form-title">HISTÓRICO</label>
+        {{ form.history }}
     </div>
 </div>

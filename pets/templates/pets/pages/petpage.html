@@ -7,9 +7,9 @@
     <div class="row text-center mt-3">  
         <div class="col-sm-8 offset-md-2">
             {% if request.user.is_authenticated%}
-                <h2 class="text-center mt-3">CÃES REGISTRADOS</h2>
+                <h2 class="text-center mt-3">PETS REGISTRADOS</h2>
             {% else %}
-                <h2 class="text-center mt-3">CÃES PARA ADOÇÃO</h2>
+                <h2 class="text-center mt-3">PETS PARA ADOÇÃO</h2>
             {% endif %}
         </div>
 
@@ -22,7 +22,38 @@
     
     {% include "pets/partials/petcard_holder.html" %}
 
-    
+    {% if page_obj and page_obj.paginator.num_pages > 1 %}
+        <div class="row mt-4 justify-content-center">
+            <nav aria-label="Paginação de cães">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" aria-label="Anterior">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num == page_obj.number %}
+                            <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}</span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}{% if query_string %}&{{ query_string }}{% endif %}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" aria-label="Próximo">&raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
+
     {% if request.user.is_authenticated %}    
     
         {% if num_results > 0 %}

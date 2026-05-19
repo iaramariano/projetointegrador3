@@ -18,12 +18,12 @@ class SectorMod(models.Model):
 class PetsMod(models.Model):
         
         #Criando as opções de escolha para a espécie, sexo e  status do animal.
-        SPECIES = [("C", "Cão"), ("G", "Gato")]
-        STATUS = [("AP", "Apto"), ("IN", "Inapto"), ("PR", "Em preparo"), ("AD", "Adotado"), ("DV", "Devolvido"), ('ES', "Estrelinha")]
-        SEXES = [("M", "Macho"), ("F", "Fêmea"), ("I", "Indefinido")]
-        ARRIVALS = [('DE', 'Devolução'), ('IN', 'Indefinida'), ('NS', 'Nascimento'), ('RS', 'Resgate'),  ('RC', 'Resgate CED')]
-        PLACES = [('IN', 'Indefinido'), ('AB', 'Abrigo'), ('GI', 'Gatil Infantil'), ('GA', 'Gatil Adulto'), ('CI', 'Canil Infantil'), 
-                  ('CA', 'Canil Adulto'), ('MI', 'Mirim'), ('LT', 'Lar Temporário'), ('LC', 'Lar Temporário CED'), ('TL', 'Trasladada')]
+        SPECIES = [("Cão", "CÃO"), ("Gato", "GATO")]
+        STATUS = [("Apto", "APTO"), ("Inapto", "INAPTO"), ("Em Preparo", "EM PREPARO"), ("Adotado", "ADOTADO"), ("Devolvido", "DEVOLVIDO"), ('Estrelinha', "ESTRELINHA")]
+        SEXES = [("Macho", "MACHO"), ("Femea", "FÊMEA"), ("Indefinido", "INDEFINIDO")]
+        ARRIVALS = [('Devolucao', 'DEVOLUÇÃO'), ('Indefinida', 'INDEFINIDA'), ('Nascimento', 'NASCIMENTO'), ('Resgate', 'RESGATE'),  ('Resgate CED', 'RESGATE CED')]
+        PLACES = [('Indefinido', 'INDEFINIDO'), ('Abrigo', 'ABRIGO'), ('Gatil Infantil', 'GATIL INFANTIL'), ('Gatil Adulto', 'GATIL ADULTO'), ('Canil Infantil', 'CANIL INFANTIL'), 
+                  ('Canil Adulto', 'CANIL ADULTO'), ('Mirim', 'MIRIM'), ('Lar Temporario', 'LAR TEMPORÁRIO'), ('Lar Temporario CED', 'LAR TEMPORÁRIO CED'), ('Trasladada', 'TRASLADADA')]
         
         #Posterior criação de um modelo de PLACEMENTS, nos moldes do de setor do abrigo anterior.
         

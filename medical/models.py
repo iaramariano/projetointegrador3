@@ -8,15 +8,15 @@ from model_utils.managers import InheritanceManager
 
 class ProcedCatalogMod(models.Model):
     TYPE_CHOICES = [
-        ('Avaliação Médico-Veterinária', '--- AVALIAÇÃO MÉDICO-VETERINÁRIA ---'),
-        ('Cirurgia', '--- CIRURGIA ---'),
-        ('Exame Laboratorial', '--- EXAME LABORATORIAL ---'),
-        ('Terapia', '--- TERAPIA ---'),
-        ('Tratamento', '--- TRATAMENTO ---'),
-        ('Vacina', '--- VACINA ---')
+        ('Avaliação Médico-Veterinária', 'Avaliação Médico-Veterinária'),
+        ('Cirurgia', 'Cirurgia'),
+        ('Exame', 'Exame'),
+        ('Terapia', 'Terapia'),
+        ('Tratamento', 'Tratamento'),
+        ('Vacina', 'Vacina')
     ]
 
-    SPECIES_CHOICES = [('Gato', '--- GATO ---'), ('Cão', '--- CÃO ---')]
+    SPECIES_CHOICES = [('Gato', 'Gato'), ('Cão', 'Cão')]
     
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=False, null=False)
@@ -29,9 +29,6 @@ class ProcedCatalogMod(models.Model):
     alternatives = models.JSONField(default=list, blank=True, null=True)
     description = models.TextField(blank=True)
                                    
-    def __str__(self):
-        return f"{self.name} : {self.description}"
-
     class Meta:
         verbose_name = "Catálogo de Procedimento"
         verbose_name_plural = "Catálogo de Procedimentos"
@@ -39,6 +36,18 @@ class ProcedCatalogMod(models.Model):
         constraints = [models.UniqueConstraint(
             fields=['name', 'type', 'species'],
             name='unique_catalog_procedure')]
+    def __str__(self):
+        return f"{self.name} - {self.species}"
+    
+    def get_extra_info(self):
+        if hasattr(self, 'exammod'):
+            return f"Laudo: {self.exammod.report}"
+        elif hasattr(self, 'vaccinemod'):
+            return f"Próxima dose: {self.vaccinemod.next_dose}"
+        elif hasattr(self, 'medicationmod'):
+            return f"{self.medicationmod.medicine.name} - {self.medicationmod.dosage}"
+        return ''
+
     
 
 # Modelo de eventos médicos
@@ -67,22 +76,33 @@ class MedicalEventMod(models.Model):
         ordering = ['-date']
 
         verbose_name = "Registro de Eventos Médicos"
+    
+    def __str__(self):
+        return f"{self.procedure} do(a) paciente {self.pet}"
 
 
 # Expansão do modelo de eventos médicos para adicionar campos específicos de exame. Posteriormente, adicionar a possibilidade de subir um laudo (report) em pdf
 
 class ExamMod(MedicalEventMod):
     positive = models.BooleanField(default=False)
-    report = models.TextField(blank=True)
+    report = models.FileField(upload_to='laudos_exames/', verbose_name="Laudo / Resultado (PDF)", blank=True, null=True)
 
     class Meta:
         verbose_name = "Registro de Exames"
+    
+    def __str__(self):
+        return f"{self.procedure} do(a) paciente {self.pet}"
+
 
 
 # Expansão do modelo de eventos médicos para adicionar campos específicos de vacina. Posteriormente, adicionar alertas de próxima dose.
 class VaccineMod(MedicalEventMod):
     batch = models.CharField(max_length=50, blank=True)
     next_dose = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+
+    def __str__(self):
+        return f" Vacina {self.procedure} aplicada no(a) paciente {self.pet}"
+
 
 
 # Expansão do modelo de eventos médicos para adicionar receitas ou aplicações de medicações. Posteriormente, implantar alertas 
@@ -93,3 +113,6 @@ class MedicationMod(MedicalEventMod):
     dosage = models.DecimalField(max_digits=10, decimal_places=4, blank=True, null=True)
     frequency = models.PositiveIntegerField(null=True, blank=True)
     duration = models.PositiveIntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f" Administração de {self.medicine} no(a) paciente {self.pet}"

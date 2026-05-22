@@ -1,0 +1,87 @@
+{% extends 'global/base.html' %}
+
+{% load static %}
+{% block title %}Histórico Médico - PET{% endblock %}
+
+{% block content %}
+
+{% include "medical/partials/message_toast.html" %}
+
+
+<div class="container mt-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4 text-center">HISTÓRICO DE EVENTOS MÉDICOS</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center">           
+        <div class="col-md-8">    
+            {% if pet.photo%}
+                <img src="{{ pet.photo.url }}" class="img-fluid w-100 h-100 object-fit-cover" alt="Foto de {{ pet.name }}" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+            {% else %}
+                <img id="frontPreview" src="{% static 'pets/img/placeholder_front_photo.png' %}" alt="Prévia da foto frontal" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+            {% endif %}
+            </div>
+    </div>
+    
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-8">
+            <h3 class="border-bottom border-top border-section pb-2 mb-3">{{pet.name}}</h3>
+        </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-8">
+            <div class = "row">
+                <div class="col-md-6">
+                    <p><strong>Espécie:</strong> {{pet.species}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Sexo:</strong> {{pet.sex}}</p>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="col-md-6">
+                    <p><strong>Idade:</strong> {{pet_age_str}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Status:</strong> {{pet.status}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="row mt-3 justify-content-center">
+        <div class="col-md-8">
+            <h4 class="border-bottom border-top border-section pb-2 mb-3">Eventos Médicos</h4>
+        </div>
+    </div>
+    
+    <div class="row mt-3 justify-content-center">           
+        <div class="col-md-8">
+            {% include "medical/partials/show_events.html" %}
+        </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-8">
+            <h4 class="border-bottom border-top border-section pb-2 mb-3">Histórico</h4>
+        </div>
+    </div>
+    
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-8">
+            <p>{{ pet.history }}</p>
+        </div>
+    </div>
+
+    {% include "medical/partials/footer_back.html" %}
+    
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src= "{% static 'medical/js/medical_event.js' %}"></script>
+{% endblock %}

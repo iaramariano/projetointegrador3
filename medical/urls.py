@@ -22,6 +22,25 @@ urlpatterns = [
 
     # Páginas relacionadas a eventos médicos
 
-    path('event/new/', views.event_type_select, name='event_type_select'),
-    path('event/new/exam/', views.event_new_exam, name='event_new_exam')
+    
+    # Variações das páginas (e formulários) para registro de eventos médicos
+    path('event/new/', views.event_register, name='event_register'),
+    path('event/new/exam/', views.event_register,{'type': 'Exame'}, name='event_register_exam'),
+    path('event/new/vaccine/', views.event_register,{'type': 'Vacina'}, name='event_register_vaccine'),
+    path('event/new/medication/', views.event_register,{'type': 'Medicação'}, name='event_register_medication'),
+    path('event/new/general/', views.event_register,{'type': 'Geral'}, name='event_register_general'),
+
+    # Salva, Edita e exclui registro
+    path('event/save/', views.event_save, name='event_save'),
+    path('event/edit', views.event_edit, name='event_edit'),
+    path('event/delete', views.event_delete, name='event_delete'),
+
+    path('event/history/select', views.event_history_select, name='event_history_select'),
+    
+    
+    # Auxiliares. Filtram pets por critérios para facilitar a seleção
+    path('event/pets-by-procedure/', views.pets_by_procedure, name='pets_by_procedure'),
+    path('event/pets-by-species/', views.pets_by_species, name='pets_by_species'),
+
+    #path('event/history/', views.event_history, name='event_history'),
 ]

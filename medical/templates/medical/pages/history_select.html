@@ -1,0 +1,71 @@
+{% extends 'global/base.html' %}
+
+{% load static %}
+{% block title %}Registro de Procedimento médico{% endblock %}
+
+{% block content %}
+
+{% include "medical/partials/message_toast.html" %}
+
+
+<div class="container mt-5">
+    '
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4 text-center">SELECIONAR HISTÓRICO MÉDICO</h1>
+              
+        </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center">           
+        <div class="col-md-8">
+            <h4 class="border-bottom border-section pb-2 mb-3">Selecione o animal para observar o histórico médico</h4>
+        </div>
+    </div>
+
+    
+    <form method="POST">
+    {% csrf_token %}
+    
+        <div class="row mt-1 justify-content-center">           
+            <div class="col-md-8">
+            
+                <div class="row g-3 justify-content-between align-items-center" > 
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3 d-flex flex-column">
+                        <label class="form-label">Espécie:</label>
+                            <select name="species" id="id_species" class="form-select">
+                                <option value="">-----</option>
+                                <option value="Cão">CÃO</option>
+                                <option value="Gato">GATO</option>
+                            </select>
+                    </div>
+                
+                    <div class="col-md-3 d-flex flex-column">
+                        <div id='id_pet_group' style="display: none;">
+                            <label class="form-label" id="id_label_pet">Paciente:</label>
+                            <select name="id_pet" id="id_pet" class="form-select">
+                                <option value="">-----</option>
+                            </select>
+                        </div>
+                    </div>                
+                
+                    <div class="col-md-2 d-flex flex-column">
+                        <button type="submit" class="btn btn-primary btn-login btn-lg mt-5" id="btn_visularizar" title="Visualizar Histórico Médico" disabled> 
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div> 
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% include "medical/partials/footer_back.html" %}
+
+
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src= "{% static 'medical/js/medical_history.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+<div class="row mt-3 mx-2">    
+    <table class="text-center">
+            
+        <thead>
+            <tr class="tr-head">
+                <th scope="col">Procedimento</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Espécie</th>
+                <th scope="col">Obrigatório (para adoção)</th>
+                <th scope="col">Há alternativas para esse procedimento?</th>
+                <th scope="col">Editar procedimento</th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            {% for procedure, alt_string in procedures %}
+
+            {% if forloop.counter|divisibleby:2 %}
+                <tr class="tr-row-even">
+            {% else %}
+                <tr class="tr-row-odd">
+            {% endif %}
+                    <td class="text-center">{{procedure.name}}</td>
+                    <td class="text-center">{{procedure.type}}</td>
+                    <td class="text-center">{{procedure.species}}</td>
+                    <td class="text-center">{% if procedure.mandatory %}Sim{% else %}Não{% endif %}</td>
+                    <td class="text-center">
+                        {% if procedure.alternatives %}
+                            <details style="display: inline;"> 
+                                <summary style="display: inline; color: #533E1A; cursor: pointer;">Sim</summary>
+                                <span>{{alt_string}}</span>
+                            </details>
+                        {% else %}
+                            Não
+                        {% endif %}
+                    </td>                        
+                    <td class="text-center">
+                        <form method="POST" action="{% url 'medical:catalog_edit' %}" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="procedure_id" value="{{ procedure.id }}">
+                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline text-decoration-none text-warning">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </form>
+                    </td>
+                
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row mt-3"></div>
+<div class="row mt-3">
+    <div class="col-12 text-end align-items-center">
+        <span class="form-title">Total de procedimentos registrados: </span><span id="totalChecked" class="total-residents">{{ n_procedures }}</span>
+    </div>
+</div>
+
+

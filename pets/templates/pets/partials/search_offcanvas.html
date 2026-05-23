@@ -1,13 +1,11 @@
 <div class="offcanvas offcanvas-start bg-light-caramel" data-bs-backdrop="static" tabindex="-1" id="searchBackdrop" aria-labelledby="searchBackdropLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="searchBackdropLabel">PESQUISAR CÃO</h5>
+        <h5 class="offcanvas-title" id="searchBackdropLabel">PESQUISAR PETS</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     
     <div class="offcanvas-body">
-        <form id="search_pet" method='POST' action= {% url 'pet:search_respost'%}>
-        {% csrf_token %}
-            
+        <form id="search_pet" method="get" action="{% url 'pet:search_respost' %}">
             <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow">   
                 <label for="name" class="form-label register-form-title">NOME</label>
                 <input type="text" id="search_name" name="name" class="form-control text-center form-field-lg field-onchange" placeholder="Nome do cão">
@@ -16,46 +14,58 @@
             <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow">
                 <label class="form-label register-form-title">SEXO</label>
                 <div class="form-check form-check-inline custom-radio mt-2">
-                        
                     <div class="form-check-inline">
                         <input type="radio" class="form-check-input ms-3 me-2 field-onchange" name="sex" id="search_sex_m" value="M">
                         <label class="form-check-label" for="search_sex_m">Macho</label>
                     </div>
-                        
                     <div class="form-check-inline">
                         <input type="radio" class="form-check-input ms-3 me-2 field-onchange" name="sex" id="search_sex_f" value="F">
                         <label class="form-check-label" for="search_sex_f">Fêmea</label>
                     </div>
-                    
                 </div>
             </div>
-        
-            {%if user.is_authenticated %}
-            
-                <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow justify-content-center">
-                    <label for="sector" class="form-label register-form-title">SETOR</label>
-                    <select id="sector" name="sector" class="form-select text-center field-onchange w-50">
-                        <option value="">---</option>
-                        {% for sector in sectors %}
-                            <option value="{{ sector.id }}">{{ sector.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            
 
-                <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow justify-content-center">
-                    <label for="aptitude" class="form-label register-form-title">ADOÇÃO</label>
-                    <select id="aptitude" name="aptitude" class="form-select text-center field-onchange w-50">
-                        <option value="">---</option>
-                        {% for value, aptitude in aptitudes %}    
-                            <option value="{{ value }}">{{ aptitude }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            {% endif %}
+            <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow justify-content-center">
+                <label for="species" class="form-label register-form-title">ESPÉCIE</label>
+                <select id="species" name="species" class="form-select text-center field-onchange w-50">
+                    <option value="">---</option>
+                    <option value="C">Cão</option>
+                    <option value="G">Gato</option>
+                </select>
+            </div>
+
+            <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow justify-content-center">
+                <label for="status" class="form-label register-form-title">SITUAÇÃO</label>
+                <select id="status" name="status" class="form-select text-center field-onchange w-50">
+                    <option value="">---</option>
+                    <option value="AP">Apto</option>
+                    <option value="IN">Inapto</option>
+                    <option value="PR">Em preparo</option>
+                    <option value="AD">Adotado</option>
+                    <option value="DV">Devolvido</option>
+                    <option value="ES">Estrelinha</option>
+                </select>
+            </div>
+
+            <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow justify-content-center">
+                <label for="placement" class="form-label register-form-title">LOCALIZAÇÃO</label>
+                <select id="placement" name="placement" class="form-select text-center field-onchange w-50">
+                    <option value="">---</option>
+                    <option value="IN">Indefinido</option>
+                    <option value="AB">Abrigo</option>
+                    <option value="GI">Gatil Infantil</option>
+                    <option value="GA">Gatil Adulto</option>
+                    <option value="CI">Canil Infantil</option>
+                    <option value="CA">Canil Adulto</option>
+                    <option value="MI">Mirim</option>
+                    <option value="LT">Lar Temporário</option>
+                    <option value="LC">Lar Temporário CED</option>
+                    <option value="TL">Trasladada</option>
+                </select>
+            </div>
             
             <div class="row mt-4 mb-4 pt-2 pb-4 rounded shadow justify-content-center">
-                <button type="submit" class="btn btn-primary mb-3 mt-3 me-3 btn-login w-25" id="btn_search" disabled>PESQUISAR</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-3 me-3 btn-login w-25" id="btn_search">PESQUISAR</button>
             </div>
         </form>
     </div>

@@ -1,10 +1,11 @@
 from django.contrib import messages
-from django.db.models import Count
+from django.core.paginator import Paginator
+from django.db.models import Count, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .forms import PetsModForm, SectorModForm, MedicalEventForm, NewStatusForm, MedicalEventSectorForm, SectorSelectForm
-from .models import PetsMod, SectorMod, MedicalEventMod
+from .forms import PetsModForm, MedicalEventForm, NewStatusForm
+from .models import PetsMod, MedicalEventMod
 
 from .services import register_medical_event_pet, register_medical_event_sector
 
@@ -34,63 +35,84 @@ def home(request):
 def panel(request):
     return render(request, 'pets/pages/panel.html')
 
+SEARCH_VALUE_MAP = {
+    'species': {'C': 'Cão', 'G': 'Gato'},
+    'sex': {'M': 'Macho', 'F': 'Fêmea', 'I': 'Indefinido'},
+    'status': {'AP': 'Apto', 'IN': 'Inapto', 'PR': 'Em Preparo', 'AD': 'Adotado', 'DV': 'Devolvido', 'ES': 'Estrelinha'},
+    'placement': {'IN': 'Indefinido', 'AB': 'Abrigo', 'GI': 'Gatil Infantil', 'GA': 'Gatil Adulto', 'CI': 'Canil Infantil', 'CA': 'Canil Adulto', 'MI': 'Mirim', 'LT': 'Lar Temporário', 'LC': 'Lar Temporário CED', 'TL': 'Trasladada'},
+}
 
-# *************************************************************** VIEWS RELACIONADAS A CÃES**********************************************************************
+SEARCH_VALUE_MAP_REVERSE = {
+    key: {v: k for k, v in mapping.items()}
+    for key, mapping in SEARCH_VALUE_MAP.items()
+}
 
-# ***************************************************************************************************************************************************************
- 
-# View básica de listagem de cães. Reage a diversos cenários: usuário logado ou não, listagem com ou sem parâmetros de busca.
+
 def petlist(request, search=False, filter=False):
-    
     context = {'search': search, 'filter': filter}
-    
-    if request.user.is_authenticated: # Se o usuário estiver logado:
 
-        #Recupera os dados do banco de dados:
-        petlist = PetsMod.objects.all().order_by('name') #Seleciona todos os cães cadastrados, ordenados por nome.
-        sectors = SectorMod.objects.all() # Seleciona todos os setores cadastrados. (para formulário de busca)
-        aptitudes = PetsMod.APTITUDE # Seleciona todas as aptidões possíveis (para formulário de busca)
-        
-        #Passa os dados login-dependentes para o contexto
-        context['sectors'] = sectors
-        context['aptitudes'] = aptitudes
+    if request.user.is_authenticated:
+        petlist = PetsMod.objects.all().order_by('name')
+    else:
+        petlist = PetsMod.objects.filter(
+            Q(status='AP') | Q(status=SEARCH_VALUE_MAP['status'].get('AP', 'AP'))
+        ).order_by('name')
 
-    else: #Se o usuário não estiver logado:
-        petlist = PetsMod.objects.filter(aptitude='AP').order_by('name') #Seleciona apenas os cães aptos à adoção, ordenados por nome.
-    
-    
-    # Se a página for exibir o resultado de uma busca ou filtragem
-    if filter and request.method == 'POST':
-        
-        allowed_fields = ['name', 'sex', 'sector', 'aptitude'] #Campos permitidos para filtro.
+    if filter and request.method in ['POST', 'GET']:
+        request_data = request.POST if request.method == 'POST' else request.GET
+        allowed_fields = ['name', 'sex', 'species', 'status', 'placement']
+        for key, value in request_data.items():
+            if key in allowed_fields and value:
+                value = value.strip()
+                if key == 'name':
+                    petlist = petlist.filter(name__istartswith=value)
+                else:
+                    candidates = [value]
+                    forward = SEARCH_VALUE_MAP.get(key, {}).get(value)
+                    reverse = SEARCH_VALUE_MAP_REVERSE.get(key, {}).get(value)
+                    if forward and forward not in candidates:
+                        candidates.append(forward)
+                    if reverse and reverse not in candidates:
+                        candidates.append(reverse)
 
-        for key, value in request.POST.items(): #Filtra os dados conforme os parâmetros recebidos.
-            if key in allowed_fields:
-                if value:
-                    if key == 'name':
-                        petlist = petlist.filter(name__istartswith=value)
-                    else:                
-                        petlist = petlist.filter(**{key:value})
+                    if len(candidates) == 1:
+                        petlist = petlist.filter(**{key: value})
+                    else:
+                        query = Q(**{key: candidates[0]})
+                        for candidate in candidates[1:]:
+                            query |= Q(**{key: candidate})
+                        petlist = petlist.filter(query)
 
-    petlist = petlist.exclude(id_pet__isnull=True)   #Limpa a lista de exibição de um possível id nulo.
-    
-    # Passa os dados não login-dependentes e filtrados (se for o caso) para o contexto
-    context['petlist'] = bg_colors.list(petlist) # Adiciona a lista de pets com as cores de fundo ao contexto.
-    context['num_results'] = len(petlist)
+    petlist = petlist.exclude(id_pet__isnull=True)
+    context['num_results'] = petlist.count()
 
-    # Caso a busca não retorne resultados, exibe uma mensagem adequada.
+    paginator = Paginator(petlist, 12)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
+    context['petlist'] = bg_colors.list(page_obj.object_list)
+    context['page_obj'] = page_obj
+
+    query_string = ''
+    if request.method == 'GET':
+        query_params = request.GET.copy()
+        query_params.pop('page', None)
+        query_string = query_params.urlencode()
+    context['query_string'] = query_string
+
     if context['num_results'] == 0:
-        
-        context['search'] = True # Reabre o formulário de busca.
-        
+        context['search'] = True
         if filter:
             messages.info(request, "Nenhum cão encontrado com os parâmetros informados.")
-             
         else:
             messages.info(request, "Nenhum cão cadastrado.")
 
     return render(request, 'pets/pages/petpage.html', context=context)
-# **************************************************************************************************************************************************************
+
+
+# *************************************************************** VIEWS RELACIONADAS A CÃES**********************************************************************
+
+# ***************************************************************************************************************************************************************
 
 # Gera o formulário de cadastro de cães. Usa o mesmo template da view de edição, mas sem dados preenchidos.
 @login_required(login_url='users:login', redirect_field_name='next')

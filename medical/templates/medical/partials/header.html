@@ -1,0 +1,35 @@
+{% load static %}
+
+<header class="container-header bg-light-caramel">
+  
+  <div class="spacing-row"></div>
+  
+    <div class="container bg-dark-caramel">
+      
+      <div class="row">
+      
+        <div class="col-3">  
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'pet:panel' %}">
+          {% else %}
+            <a href="{% url 'pet:home' %}">
+          {% endif %}
+              <img title="CÃOTROLE" title="CÃOTROLE LOGO" alt="CÃOTROLE" src="{% static 'pets/img/caotrole_alt_logo_medium.png' %}" height="100">
+            </a>
+        </div>
+        
+        {% include 'pharma/partials/center_header.html' %}
+       
+        <div class="col-3 text-end py-3">
+          {% if request.user.is_authenticated %}
+            <abbr title="{{request.user.username}}&#10;{{request.user.shelter}}"><i class="fa fa-paw user-pawn" aria-hidden="true"></i></abbr>
+            <i class="fa fa-check-circle topbar-icon-small" aria-hidden="true"></i>
+            {% else %}
+            <abbr title="Usuário não logado"><i class="fa fa-paw user-pawn" aria-hidden="true"></i></abbr>
+            <i class="fa fa-times-circle topbar-icon-small" aria-hidden="true"></i>        
+          {% endif %}
+        </div>
+      </div>
+  </div>
+</div>
+</header>

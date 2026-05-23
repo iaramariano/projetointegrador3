@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'storages',
     'newsletter',
     'pharma',
+    'medical'
 ]
 
 MIDDLEWARE = [

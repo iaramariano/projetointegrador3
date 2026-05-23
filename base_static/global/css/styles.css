@@ -140,12 +140,50 @@ body {
   }
 
 .form-control{
-    border-color: #FEF3D2
+    border-color: #FEF3D2;
+    text-align: center;
 }
 
 .form-control:focus{
     border-color: #EDBF73;
+    outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(83, 62, 26, 0.151);
+}
+
+.form-select{
+    border-color: #FEF3D2;
+    text-align: center;
+}
+
+
+.form-select:focus{
+    border-color: #EDBF73;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 62, 26, 0.151);
+}
+
+select{
+    accent-color: #EDBF73;
+}
+
+select option:checked,
+select option:hover{
+    background-color: #EDBF73 !important;
+}
+
+.form-check-input{
+    border-color: #B26E39;
+}
+
+.form-check-input:focus{
+    border-color: #EDBF73;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 62, 26, 0.151);
+}
+
+.form-check-input:checked{
+    background-color: #B26E39;
+    border-color: #B26E39;
 }
 
 .input-group-text{
@@ -185,6 +223,13 @@ body {
 
 
 }
+
+.border-section {
+    border-color: #EDBF73 !important; 
+    border-width: 2px !important;
+    color: #533E1A !important;
+}
+
 /******************************************MAIN PANEL PAGE STYLES******************************/
 .btn-icon {
     width: 18rem;

@@ -6,7 +6,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <h1 class="mb-4 text-center">Registrar Novo Item de Estoque</h1>
+            <h1 class="mb-4 text-center">{% if is_edit %}Editar Item de Estoque{% else %}Registrar Novo Item de Estoque{% endif %}</h1>
             
             {% if messages %}
                 <div class="alert-container mb-3">
@@ -115,7 +115,7 @@
                 <!-- Botões de Ação -->
                 <div class="col-12 d-flex gap-2 justify-content-center mt-4">
                     <button type="submit" class="btn btn-primary btn-lg px-4">
-                        <i class="bi bi-save"></i> Registrar Item
+                        <i class="bi bi-save"></i> {% if is_edit %}Salvar Alterações{% else %}Registrar Item{% endif %}
                     </button>
                     <a href="{% url 'pharma:list' %}" class="btn btn-outline-secondary btn-lg px-4">
                         <i class="bi bi-arrow-left"></i> Cancelar
@@ -137,8 +137,8 @@
     }
     
     .form-control:focus, .form-select:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        border-color: #ffd980;
+        box-shadow: 0 0 0 0.2rem rgba(147, 111, 13, 0.25);
     }
     
     .alert {

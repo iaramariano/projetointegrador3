@@ -10,11 +10,21 @@
 
 <div class="container mt-5">
     
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="mb-4 text-center">REGISTRAR NOVO PROCEDIMENTO MÉDICO</h1>
+    {% if procedure %}
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="mb-4 text-center">EDITAR PROCEDIMENTO MÉDICO</h1>
+            </div>
         </div>
-    </div>
+    
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="mb-4 text-center">REGISTRAR NOVO PROCEDIMENTO MÉDICO</h1>
+            </div>
+        </div>
+    {% endif %}
+
     
     <div class="row mt-3 justify-content-center">           
         <div class="col-md-8">
@@ -22,7 +32,8 @@
         </div>
     </div>
 
-    <form method="post" novalidate>
+    
+    <form method="post" action="{% url 'medical:catalog_save' %}">
     {% csrf_token %}
     
         <div class="row mt-1 justify-content-center">           
@@ -101,14 +112,29 @@
             <div class="col-md-8">
                 <div class="row mt-3 g-3 justify-content-between">
                     
-                    <div class="col-md-4"></div>
+                    <div class="col-md-2"></div>
                     <div class="col-md-2 d-flex flex-column align-items-center">
-                        <button type="submit" class="btn btn-primary btn-login btn-lg" id="btn_registrar">REGISTRAR</button>
+                        
+                        {% if procedure %}
+                            <input type="hidden" name="procedure_id" value="{{ procedure.id }}"></input>
+                            <button type="submit" class="btn btn-primary btn-login btn-lg" id="btn_editar" title="Editar Procedimento">EDITAR</button>
+                        
+                        {% else %}
+                            <button type="submit" class="btn btn-primary btn-login btn-lg" id="btn_registrar" title="Registrar Procedimento">REGISTRAR</button>
+                    
+                        {% endif %}
                     </div>
+                    
                     <div class="col-md-2 d-flex flex-column align-items-center">
                         <button type="reset" class="btn btn-primary btn-login btn-lg" id="btn_limpar">LIMPAR</button>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-2 d-flex flex-column align-items-center">
+                        <a href={% url 'medical:home' %} role="button" class="btn btn-primary btn-login btn-lg" id="btn_voltar" title="Voltar">
+                            <i class="fa-solid fa-arrow-left"></i>  VOLTAR
+                        </a>
+
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
         </div>

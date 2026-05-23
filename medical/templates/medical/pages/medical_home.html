@@ -8,42 +8,96 @@
 <div class="spacing-row"></div>
 <div class="spacing-row"></div>
 
-<!--COLUNA 1-->
-<div class="row mt-4 align-items-center">
+<div class="row justify-content-center align-items-center">
+  <h1 class="mb-4 text-center">MÓDULO MÉDICO</h1>
+</div>
   
-
-  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-    <a href = {% url 'medical:home' %} role="button" class="btn btn-icon mb-3">
-      <i class="fa-solid fa-book-open mb-2 btn-icon-main"></i>
-      <span class="btn-icon-text">VISUALIZAR ITEM</span>
-    </a>
-  </div>
-
-
-  
-
-  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-    <a href = {% url 'medical:home' %} role="button" class="btn btn-icon mb-3">
-      <i class="fas fa-syringe mb-2 btn-icon-main"></i>
-      <span class="btn-icon-text">REGISTRAR ITEM</span>
-    </a>
-  </div>
-
-
-  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-    <form method="POST" action={% url 'users:logout' %}>
-      {% csrf_token %}
-      <button type="submit" class="btn btn-icon mb-3">
-        <i class="fa-solid fa-right-from-bracket mb-2 btn-icon-main"></i>
-        <input type="hidden" name="username" value="{{ request.user.username }}">
-        <span class="btn-icon-text">SAIR</span>
-      </button>
-    </form>
-  </div>
-
-
+<div class="row mt-3 justify-content-center">           
+  <h4 class="border-bottom border-section pb-2 mb-3">Catálogo de Procedimentos e Eventos Médicos</h4>
 </div>
 
 
+<div class="row mt-4 justify-content-between">
+  
+  <div class="col-12 col-md-2 d-flex flex-column align-items-center"></div>
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:catalog_list' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-notes-medical btn-icon-main"></i>
+      <span class="btn-icon-text mt-2">CATÁLOGO DE PROCEDIMENTOS</span>
+    </a>
+  </div>
 
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:catalog_register' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-square-plus mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">INCLUIR PROCEDIMENTO NO CATÁLOGO</span>
+    </a>
+  </div>
+  <div class="col-12 col-md-2 d-flex flex-column align-items-center"></div>
+</div>
+
+
+<div class="row mt-3 justify-content-center">           
+  <h4 class="border-bottom border-section pb-2 mb-3">Eventos e Históricos Médicos</h4>
+</div>
+
+<div class="row mt-4 align-items-center justify-content-between">
+  
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:event_register_vaccine' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-syringe mb-3 btn-icon-main"></i>
+      <span class="btn-icon-text">REGISTRAR VACINAÇÃO</span>
+    </a>
+  </div>
+
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:event_register_exam' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-microscope btn-icon-main"></i>
+      <span class="btn-icon-text mt-4">REGISTRAR EXAME</span>
+    </a>
+  </div>
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:event_register_medication' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-pills btn-icon-main"></i>
+      <span class="btn-icon-text mt-3">REGISTRAR MEDICAÇÃO</span>
+    </a>
+  </div>
+
+<div class="row mt-4 align-items-center justify-content-between">
+
+  <div class="col-12 col-md-2 d-flex flex-column align-items-center"></div>
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:event_register_general' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-stethoscope btn-icon-main"></i>
+      <span class="btn-icon-text mt-3">REGISTRAR OUTROS EVENTOS MÉDICOS</span>
+    </a>
+  </div>
+
+
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'medical:event_history_select' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-file-medical mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text mt-3">VISUALIZAR HISTÓRICO DE PACIENTE</span>
+    </a>
+  </div>
+  <div class="col-12 col-md-2 d-flex flex-column align-items-center"></div>
+
+</div>
+
+<div class="row mt-3 justify-content-center">           
+  <h4 class="border-bottom border-section pb-2 mb-3"></h4>
+</div>
+
+<div class="row mt-4 align-items-center justify-content-between">
+  <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+    <a href = {% url 'pet:panel' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-arrow-left mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">VOLTAR</span>
+    </a>
+    
+  </div>
+</div>
 {% endblock %}

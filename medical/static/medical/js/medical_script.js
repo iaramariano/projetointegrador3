@@ -7,3 +7,4 @@ function mandatorySection(){
     else
         mandatory_section.classList.add('d-none');
 }
+

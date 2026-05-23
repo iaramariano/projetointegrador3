@@ -5,10 +5,31 @@
 {% block title %}Medical - Catálogo{% endblock %}
 
 {% block content %}
-    <h2 class="text-center mt-3">PROCEDIMENTOS CADASTRADOS</h2>      
+{% include "medical/partials/message_toast.html" %}
+
+
+
+<h2 class="text-center mt-3">PROCEDIMENTOS CADASTRADOS</h2>      
 
     {% include "medical/partials/show_procedures.html" %}
 
+     <div class="row mt-3 justify-content-center">           
+        <h4 class="border-bottom border-section pb-2 mb-3"></h4>
+    </div>
 
+    <div class="row mt-1 justify-content-end">           
+        <div class="col-md-11"></div>
+            <div class="col-md-1 d-flex flex-row align-items-center">    
+                <a href={% url 'medical:home' %} role="button" class="btn btn-primary me-2 mb-3 mt-3 btn-login" id="btn_voltar" title="Voltar">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <a href={% url 'medical:catalog_register' %} role="button" class="btn btn-primary ms-3 mb-3 mt-3 btn-login" id="btn_voltar" 
+                title="Adicionar novo procedimento">
+                    <i class="fa-solid fa-square-plus"></i>
+                </a>
+
+            </div>
+    </div>
+    
 {% endblock %}
 

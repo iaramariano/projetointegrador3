@@ -1,0 +1,81 @@
+<div class="row mt-3 mx-2">    
+    <table class="text-center">
+            
+        <thead>
+            <tr class="tr-head">
+                <th scope="col">Data</th>
+                <th scope="col">Procedimento</th>
+                <th scope ="col">Desfecho</th>
+                <th scope ="col">Observações</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            {% for event in events %}
+
+            {% if forloop.counter|divisibleby:2 %}
+                <tr class="tr-row-even">
+            {% else %}
+                <tr class="tr-row-odd">
+            {% endif %}
+                    <td class="text-center">{{event.date}}</td>
+                    <td class="text-center">{{event}}</td>
+                    
+                    {% if event.outcome %}
+                        <td class="text-center">{{event.outcome}}</td>
+                    {% else %}
+                        <td class="text-center"></td>
+                    {% endif %}
+                    <td class="text-center">{{event.notes}}</td>
+                    
+                    <!--Coluna Ações-->
+                    <td class="text-center">
+                        
+                        <!--Botão Editar-->
+                        <form method="POST" action="{% url 'medical:event_edit' %}" style="display: inline;" >
+                        {% csrf_token %}
+                            <input type="hidden" name="event_id" value="{{ event.id }}">
+                            <input type="hidden" name="event_type" value="{{ event.type }}">
+                            <button type="submit" class="btn btn-table-submit" title="Editar Evento Médico">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </form>
+
+
+                        <!--Botão Excluir-->
+                        <form method="POST" action="{% url 'medical:event_delete' %}" style="display: inline;" >
+                        {% csrf_token %}
+                            <input type="hidden" name="event_id" value="{{ event.id }}">
+                            <input type="hidden" name="event_type" value="{{ event.type }}">    
+                            <button type="submit" class="btn btn-table-submit" title="Excluir Procedimento">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>    
+                        </form>
+                    
+                        <!--Botões Opcionais-->
+
+                        <!--Laudo do Exame -->
+
+                        {% if event.type == 'Exame'%}
+                            {% if event.report %}
+                                <a href="{{ event.result.url }}" target="_blank" class="btn btn-sm btn-info" title="Visualizar Laudo">
+                                    <i class="bi bi-file-earmark-pdf"></i> 
+                                </a>
+                            {% else %}
+                                <span class="text-muted small">Sem laudo anexo</span>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row mt-3"></div>
+<div class="row mt-3">
+    <div class="col-12 text-end align-items-center">
+        <span class="form-title">Total de eventos registrados para o paciente {{pet.name}}: </span><span id="totalChecked" class="total-residents">{{ n_events }}</span>
+    </div>
+</div>

@@ -26,7 +26,8 @@
         <li>{{ pet.get_species_display }} / {{ pet.get_sex_display }}</li>
         <li><strong>Situação:</strong> {{ pet.get_status_display }}</li>
         {% if pet.age is not None %}
-          <li><strong>Idade:</strong> {{ pet.age }} mês{% if pet.age != 1 %}es{% endif %}</li>
+          <li><strong>Idade:</strong> {% if pet.age == 0 %} Indefinida {% else %} {{ pet.age }} 
+            {% if pet.age == 1 %}mês {% else %} meses {% endif %} {% endif %}</li>
         {% endif %}
         <li><strong>Chegada:</strong> {% if pet.arrival_date %}{{ pet.arrival_date|date:"d/m/Y" }}{% else %}N/A{% endif %}</li>
         <li><strong>Local:</strong> {{ pet.get_placement_display }}</li>

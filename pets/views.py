@@ -35,6 +35,9 @@ def home(request):
 def panel(request):
     return render(request, 'pets/pages/panel.html')
 
+def pet_home(request):
+    return render(request, 'pets/pages/pet_home.html')
+
 SEARCH_VALUE_MAP = {
     'species': {'C': 'Cão', 'G': 'Gato'},
     'sex': {'M': 'Macho', 'F': 'Fêmea', 'I': 'Indefinido'},

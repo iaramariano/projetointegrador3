@@ -51,11 +51,8 @@
         <div class="row mt-3">
           <div class="text-center">
             {% if form.instance and form.instance.id_pet %}
-              <a href="{% url 'pet:dog_med_event_view' form.instance.id_pet %}"
-                role="button"
-                class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login"
-                id="btn_eventos">
-                VISUALIZAR EVENTOS MÉDICOS REGISTRADOS
+              <a href="{% url 'medical:event_history_select' %}?id_pet={{ form.instance.id_pet }}" role="button" class="btn btn-primary btn-login">
+                  <i class="fa-solid fa-file-medical me-2"></i> Ver Histórico Médico
               </a>
             {% endif %}
           </div>
@@ -84,7 +81,7 @@
       <div class="text-center">
         <button type="submit" class="btn btn-primary mb-3 mt-3 me-3 btn-login" id="btn_registrar">REGISTRAR</button>
         <button type="reset" class="btn btn-primary ms-3 mb-3 mt-3 me-3 btn-login" id="btn_limpar">LIMPAR</button>
-        <a href="{% url 'pet:panel' %}" role="button" class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login" id="btn_voltar">VOLTAR</a>
+        <a href="{% url 'pet:pet_home' %}" role="button" class="btn btn-primary ms-3 me-3 mb-3 mt-3 btn-login" id="btn_voltar">VOLTAR</a>
       </div>
     </div>
   </form>

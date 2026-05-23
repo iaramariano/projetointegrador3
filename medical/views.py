@@ -338,21 +338,14 @@ def event_delete(request):
 #***********************************************************************************************
 def event_history_select(request):
 
-    if request.method == 'POST':
-        
-        pet_id = request.POST.get('id_pet')
-        
-        if not pet_id:
-        
-            messages.error(request, "Ocorreu um erro inesperado. Realize a operação novamente.")
-            return redirect('medical:home')
+    pet_id = request.POST.get('id_pet') or request.GET.get('id_pet')
+    
+    if pet_id:
         
         pet = get_object_or_404(PetsMod, id_pet=pet_id)
         events = MedicalEventMod.objects.select_related('pet', 'procedure').select_subclasses().filter(pet=pet)
 
         pet_age_str = pet_age_yrs(pet.age)
-
-        print(pet_age_str)
 
         context = {
             'events': events,
@@ -360,9 +353,14 @@ def event_history_select(request):
             'pet_age_str': pet_age_str,
             'n_events': events.count()
         }
-
-        return render (request, 'medical/pages/event_history.html', context=context)    
-    return render (request, 'medical/pages/history_select.html')
+        
+        return render(request, 'medical/pages/event_history.html', context=context)    
+    
+    if request.method == 'GET':
+        return render(request, 'medical/pages/history_select.html')
+        
+    messages.error(request, "Ocorreu um erro inesperado. Realize a operação novamente.")
+    return redirect('medical:home')
 
 #***********************************************************************************************
 

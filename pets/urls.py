@@ -11,6 +11,7 @@ urlpatterns = [
     #path('users', views.users, name='users'),
     
     # Pet URLs
+    path('pet/home', views.pet_home, name='pet_home'),
     path('pet', views.pet, name='pet'),
     path('pet/create', views.pet_create, name='pet_create'),
     path('pet/view/<int:id_pet>', views.pet_view, name='pet_view'),

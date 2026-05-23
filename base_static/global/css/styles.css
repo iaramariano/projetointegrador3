@@ -500,3 +500,15 @@ select option:hover{
 }
 
 /********************Search offcanvas********************/
+.btn-outline-info{
+    color: #B26E39;
+    border-color: #B26E39;
+    background-color: #F4A66D;
+}
+
+.btn-outline-info:focus{
+    background-color: #F4A66D;
+    color: #533E1A;
+    border-color: #B26E39;
+    box-shadow: 0 0 0 0.25rem rgba(32, 15, 0, 0.1);
+}

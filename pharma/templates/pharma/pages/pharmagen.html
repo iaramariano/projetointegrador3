@@ -14,31 +14,23 @@
 
   <div class="col-12 col-md-4 d-flex flex-column align-items-center">
     <a href = {% url 'pharma:list' %} role="button" class="btn btn-icon mb-3">
-      <i class="fa-solid fa-book-open mb-2 btn-icon-main"></i>
-      <span class="btn-icon-text">VISUALIZAR ITEM</span>
+      <i class="fa-solid fa-boxes-stacked mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">VISUALIZAR ESTOQUE</span>
     </a>
   </div>
 
-
-  
-
   <div class="col-12 col-md-4 d-flex flex-column align-items-center">
     <a href = {% url 'pharma:register' %} role="button" class="btn btn-icon mb-3">
-      <i class="fas fa-syringe mb-2 btn-icon-main"></i>
+      <i class="fas fa-file-invoice mb-2 btn-icon-main"></i>
       <span class="btn-icon-text">REGISTRAR ITEM</span>
     </a>
   </div>
 
-
   <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-    <form method="POST" action={% url 'users:logout' %}>
-      {% csrf_token %}
-      <button type="submit" class="btn btn-icon mb-3">
-        <i class="fa-solid fa-right-from-bracket mb-2 btn-icon-main"></i>
-        <input type="hidden" name="username" value="{{ request.user.username }}">
-        <span class="btn-icon-text">SAIR</span>
-      </button>
-    </form>
+    <a href = {% url 'pet:panel' %} role="button" class="btn btn-icon mb-3">
+      <i class="fa-solid fa-arrow-left mb-2 btn-icon-main"></i>
+      <span class="btn-icon-text">VOLTAR</span>
+    </a> 
   </div>
 
 
